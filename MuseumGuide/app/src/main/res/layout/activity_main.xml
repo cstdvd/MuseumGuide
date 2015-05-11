@@ -22,12 +22,11 @@
         android:layout_height="95dp"
         android:text="@string/enter_button"
         android:id="@+id/enterButton"
-        android:textSize="25dp"
-        android:elegantTextHeight="false"
+        android:textSize="50dp"
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="#ff343575"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"/>
 
 </RelativeLayout>
