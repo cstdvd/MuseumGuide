@@ -26,6 +26,8 @@
         android:elegantTextHeight="false"
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="#ff343575"
+        android:textColor="#ffffffff" />
 
 </RelativeLayout>

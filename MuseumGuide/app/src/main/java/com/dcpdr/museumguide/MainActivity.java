@@ -1,6 +1,7 @@
 package com.dcpdr.museumguide;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,7 +20,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         // set onClick listener on the button
+        Typeface font = Typeface.createFromAsset(this.getAssets(),"heorot.ttf");
         Button button = (Button) findViewById(R.id.enterButton);
+        button.setTypeface(font);
         button.setOnClickListener(this);
     }
 
