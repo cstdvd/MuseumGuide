@@ -13,15 +13,15 @@
         android:src="@drawable/mg_logo"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_above="@+id/button"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button" />
+        android:layout_above="@+id/enterButton"
+        android:layout_alignRight="@+id/enterButton"
+        android:layout_alignEnd="@+id/enterButton" />
 
     <Button
         android:layout_width="273dp"
         android:layout_height="95dp"
         android:text="@string/enter_button"
-        android:id="@+id/button"
+        android:id="@+id/enterButton"
         android:textSize="25dp"
         android:elegantTextHeight="false"
         android:layout_gravity="bottom"
