@@ -1,0 +1,21 @@
+<xml version="1.0" encoding="UTF-8">
+<museum>
+	<hallway id="1">
+		<coordinates>100,100,100,100,100,100,100,100</coordinates>
+		<link id ="1">2</link>
+		<link id = "2">3</link>
+		<sensor id="1">30,30</sensor>
+	</hallway>
+	
+	<hallway id="2">
+		<coordinates>400,400,400,400,400,400,400,400</coordinates>
+		<link id ="1">1</link>
+		<sensor id="1">20,20</sensor>
+	</hallway>
+	
+		<hallway id="3">
+		<coordinates>400,400,400,400,400,400,400,400</coordinates>
+		<link id ="1">1</link>
+		<sensor id="1">20,20</sensor>
+	</hallway>
+</museum>
