@@ -4,20 +4,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.qozix.tileview.TileView;
 
 
 public class MapsActivity extends ActionBarActivity {
-
-    // Constants definition
-    private final int tileHeight = 2288;
-    private final int tileWidth = 2512;
-    private final int tileSize = 128;
-    private final String tilesPath = "tiles/planimetria/";
-    private final String sampleImage = "samples/planimetria/planimetria.jpg";
-    private final String extension = ".jpg";
-    private final float[] detailScales = {1.00f, 0.5f, 0.25f, 0.125f};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +18,12 @@ public class MapsActivity extends ActionBarActivity {
         // Create a TileView object
         TileView tileView = new TileView(this);
         // Setup the TileView
-        tileView.setSize(tileWidth, tileHeight);
-        for (int i = 0; i < detailScales.length; i++)
-            tileView.addDetailLevel(detailScales[i], tilesPath + detailScales[i] * 100 + "/%col%_%row%" + extension, sampleImage, tileSize, tileSize);
+        tileView.setSize(Parameters.TILE_WIDTH, Parameters.TILE_HEIGHT);
+        for (int i = 0; i < Parameters.DETAIL_SCALES.length; i++)
+            tileView.addDetailLevel(Parameters.DETAIL_SCALES[i], Parameters.TILES_PATH + Parameters.DETAIL_SCALES[i] * 100 + "/%col%_%row%" + Parameters.TILE_EXTENSION, Parameters.SAMPLE_IMAGE, Parameters.TILE_SIZE, Parameters.TILE_SIZE);
+
         // Define the bounds using the map size in pixel
-        tileView.defineRelativeBounds(0, 0, tileHeight, tileWidth);
+        tileView.defineRelativeBounds(0, 0, Parameters.TILE_HEIGHT, Parameters.TILE_WIDTH);
         // Display the TileView
         tileView.setScale(0);
         setContentView(tileView);
