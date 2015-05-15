@@ -11,8 +11,8 @@ import com.qozix.tileview.TileView;
 public class MapsActivity extends ActionBarActivity {
 
     // Constants definition
-    private final int tileHeight = 2512;
-    private final int tileWidth = 2288;
+    private final int tileHeight = 2288;
+    private final int tileWidth = 2512;
     private final int tileSize = 128;
     private final String tilesPath = "tiles/planimetria/";
     private final String sampleImage = "samples/planimetria/planimetria.jpg";
@@ -26,7 +26,7 @@ public class MapsActivity extends ActionBarActivity {
         // Create a TileView object
         TileView tileView = new TileView(this);
         // Setup the TileView
-        tileView.setSize(tileHeight, tileWidth);
+        tileView.setSize(tileWidth, tileHeight);
         for (int i = 0; i < detailScales.length; i++)
             tileView.addDetailLevel(detailScales[i], tilesPath + detailScales[i] * 100 + "/%col%_%row%" + extension, sampleImage, tileSize, tileSize);
         // Define the bounds using the map size in pixel
