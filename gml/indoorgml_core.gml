@@ -129,6 +129,9 @@
               <Transition gml:id="TREXT_0">
                 <gml:name>TREXT_0</gml:name>
                 <weight>1</weight>
+				<duality gml:id="DUA6">
+				  <cellSpaceBoundaryMember xlink:href="#CSBEXT_0" />
+				</duality>
                 <start xlink:href="#EXT" />
                 <end xlink:href="#ST0" />
                 <geometry>
@@ -143,6 +146,9 @@
               <Transition gml:id="TR0_2">
                 <gml:name>TR0_2</gml:name>
                 <weight>1</weight>
+				<duality gml:id="DUA7">
+				  <cellSpaceBoundaryMember xlink:href="#CSB0_2" />
+				</duality>
                 <start xlink:href="#ST0" />
                 <end xlink:href="#ST2" />
                 <geometry>
@@ -157,6 +163,9 @@
               <Transition gml:id="TR0_1">
                 <gml:name>TR0_1</gml:name>
                 <weight>1</weight>
+				<duality gml:id="DUA8">
+				  <cellSpaceBoundaryMember xlink:href="#CSB0_1" />
+				</duality>
                 <start xlink:href="#ST0" />
                 <end xlink:href="#ST1" />
                 <geometry>
@@ -171,6 +180,9 @@
               <Transition gml:id="TR1_2">
                 <gml:name>TR1_2</gml:name>
                 <weight>1</weight>
+				<duality gml:id="DUA9">
+				  <cellSpaceBoundaryMember xlink:href="#CSB1_2" />
+				</duality>
                 <start xlink:href="#ST1" />
                 <end xlink:href="#ST2" />
                 <geometry>
@@ -185,6 +197,9 @@
               <Transition gml:id="TR1_3">
                 <gml:name>TR1_3</gml:name>
                 <weight>1</weight>
+				<duality gml:id="DUA10">
+				  <cellSpaceBoundaryMember xlink:href="#CSB1_3" />
+				</duality>
                 <start xlink:href="#ST1" />
                 <end xlink:href="#ST3" />
                 <geometry>
@@ -199,6 +214,9 @@
               <Transition gml:id="TR1_5">
                 <gml:name>TR1_5</gml:name>
                 <weight>1</weight>
+				<duality gml:id="DUA11">
+				  <cellSpaceBoundaryMember xlink:href="#CSB1_5" />
+				</duality>
                 <start xlink:href="#ST1" />
                 <end xlink:href="#ST5" />
                 <geometry>
@@ -213,6 +231,9 @@
               <Transition gml:id="TR1_4">
                 <gml:name>TR1_4</gml:name>
                 <weight>1</weight>
+				<duality gml:id="DUA12">
+				  <cellSpaceBoundaryMember xlink:href="#CSB1_4" />
+				</duality>
                 <start xlink:href="#ST1" />
                 <end xlink:href="#ST4" />
                 <geometry>
@@ -297,5 +318,63 @@
 		</geometry>
 	  </CellSpace>
 	</cellSpaceMember>
+	<cellSpaceBoundaryMember gml:id="CSBM">
+	  <CellSpaceBoundary gml:id="CSBEXT_0">
+	    <geometry>
+		  <LineString gml:id="LS7">
+		    <gml:pos>1650 0 0</gml:pos>
+            <gml:pos>1853 0 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	  <CellSpaceBoundary gml:id="CSB0_1">
+	    <geometry>
+		  <LineString gml:id="LS8">
+		    <gml:pos>1650 1538 0</gml:pos>
+            <gml:pos>1755 1538 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	  <CellSpaceBoundary gml:id="CSB0_2">
+	    <geometry>
+		  <LineString gml:id="LS9">
+		    <gml:pos>1755 1538 0</gml:pos>
+            <gml:pos>1853 1538 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	  <CellSpaceBoundary gml:id="CSB1_2">
+	    <geometry>
+		  <LineString gml:id="LS10">
+		    <gml:pos>1755 1538 0</gml:pos>
+            <gml:pos>1755 1713 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	  <CellSpaceBoundary gml:id="CSB1_3">
+	    <geometry>
+		  <LineString gml:id="LS11">
+		    <gml:pos>465 1538 0</gml:pos>
+            <gml:pos>146 1713 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	  <CellSpaceBoundary gml:id="CSB1_4">
+	    <geometry>
+		  <LineString gml:id="LS12">
+		    <gml:pos>805 1713 0</gml:pos>
+            <gml:pos>870 1713 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	  <CellSpaceBoundary gml:id="CSB1_5">
+	    <geometry>
+		  <LineString gml:id="LS13">
+		    <gml:pos>812 1538 0</gml:pos>
+            <gml:pos>925 1538 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	</cellSpaceBoundaryMember>
   </PrimalSpaceFeatures>
 </IndoorFeatures>
