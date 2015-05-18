@@ -247,7 +247,94 @@
           </edges>
         </SpaceLayer>
       </spaceLayerMember>
-    </spaceLayers>
+      <spaceLayerMember>
+        <SpaceLayer gml:id="SL2">
+          <nodes gml:id="N1">
+            <stateMember>
+              <State gml:id="SS0">
+                <gml:name>SS0</gml:name>
+                <connects gml:id="CON6" />
+                <geometry>
+                  <gml:Point gml:id="PTS0">
+                    <gml:pos>1655,38992805755 1037,77142857143 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+            <stateMember>
+              <State gml:id="SS1">
+                <gml:name>SS1</gml:name>
+                <connects gml:id="CON7" />
+                <geometry>
+                  <gml:Point gml:id="PTS1">
+                    <gml:pos>1225,27769784173 1544,4 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+            <stateMember>
+              <State gml:id="SS2">
+                <gml:name>SS2</gml:name>
+                <connects gml:id="CON8" />
+                <geometry>
+                  <gml:Point gml:id="PTS2">
+                    <gml:pos>2139,71798561151 1707,82857142857 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+          </nodes>
+          <edges gml:id="E1" />
+        </SpaceLayer>
+      </spaceLayerMember>
+	</spaceLayers>
+	<interEdges gml:id="IEs1">
+	  <InterLayerConnection gml:id="ILC1">
+	    <interConnects>
+		  <stateMember xlink:href="#ST0" />
+		</interConnects>
+		<interConnects>
+		  <stateMember xlink:href="#SS0" />
+		</interConnects>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL1" />
+		</ConnectedLayers>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL2" />
+		</ConnectedLayers>
+		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
+	  </InterLayerConnection>
+	  <InterLayerConnection gml:id="ILC2">
+	    <interConnects>
+		  <stateMember xlink:href="#ST1" />
+		</interConnects>
+		<interConnects>
+		  <stateMember xlink:href="#SS1" />
+		</interConnects>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL1" />
+		</ConnectedLayers>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL2" />
+		</ConnectedLayers>
+		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
+	  </InterLayerConnection>
+	  <InterLayerConnection gml:id="ILC3">
+	    <interConnects>
+		  <stateMember xlink:href="#ST2" />
+		</interConnects>
+		<interConnects>
+		  <stateMember xlink:href="#SS2" />
+		</interConnects>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL1" />
+		</ConnectedLayers>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL2" />
+		</ConnectedLayers>
+		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
+	  </InterLayerConnection>
+	</interEdges>
   </MultiLayeredGraph>
   <PrimalSpaceFeatures gml:id="PSF">
     <cellSpaceMember gml:id="CSM1">
