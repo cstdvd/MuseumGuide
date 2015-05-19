@@ -256,7 +256,7 @@
                 <connects gml:id="CON6" />
                 <geometry>
                   <gml:Point gml:id="PTS0">
-                    <gml:pos>1655,38992805755 1037,77142857143 0</gml:pos>
+                    <gml:pos>1655 1037 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
@@ -267,7 +267,7 @@
                 <connects gml:id="CON7" />
                 <geometry>
                   <gml:Point gml:id="PTS1">
-                    <gml:pos>1225,27769784173 1544,4 0</gml:pos>
+                    <gml:pos>1225 1544 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
@@ -278,7 +278,7 @@
                 <connects gml:id="CON8" />
                 <geometry>
                   <gml:Point gml:id="PTS2">
-                    <gml:pos>2139,71798561151 1707,82857142857 0</gml:pos>
+                    <gml:pos>2139 1707 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
