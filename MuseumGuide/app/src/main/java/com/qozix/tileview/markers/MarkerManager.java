@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
+import android.widget.Toast;
 
 import com.qozix.layouts.TranslationLayout;
 import com.qozix.tileview.detail.DetailLevelEventListener;
@@ -135,7 +136,6 @@ public class MarkerManager extends TranslationLayout implements DetailLevelEvent
 
 	@Override
 	public void onDetailLevelChanged() {
-
 	}
 
 	@Override

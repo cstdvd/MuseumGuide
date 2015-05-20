@@ -13,5 +13,14 @@ public class Parameters {
     public static final float[] DETAIL_SCALES = {1.00f, 0.5f, 0.25f, 0.125f};
 
     // GML map parameters
-    public static final String MAP_FILE = "/maps/prova.xml";
+    public static final String MAP_FILE = "maps/museum.gml";
+
+    // XTileView zoom thresholds
+    public static final double ZOOM_XL = 0.9;
+    public static final double ZOOM_L = 0.75;
+    public static final double ZOOM_M = 0.60;
+    public static final double ZOOM_S = 0.40;
+
+    // General parameters
+    public static final String PACKAGE_NAME = "com.dcpdr.museumguide";
 }

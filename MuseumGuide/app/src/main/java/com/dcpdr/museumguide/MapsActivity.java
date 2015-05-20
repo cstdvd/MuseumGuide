@@ -11,19 +11,23 @@ import com.qozix.tileview.TileView;
 
 public class MapsActivity extends ActionBarActivity {
 
+   private XTileView tileView;
+   private ImageView myPosition;;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Create a TileView object
-        TileView tileView = new TileView(this);
+        tileView = new XTileView(this);
         // Setup the TileView
         tileView.setSize(Parameters.TILE_WIDTH, Parameters.TILE_HEIGHT);
         for (int i = 0; i < Parameters.DETAIL_SCALES.length; i++)
             tileView.addDetailLevel(Parameters.DETAIL_SCALES[i], Parameters.TILES_PATH + Parameters.DETAIL_SCALES[i] * 100 + "/%col%_%row%" + Parameters.TILE_EXTENSION, Parameters.SAMPLE_IMAGE, Parameters.TILE_SIZE, Parameters.TILE_SIZE);
 
         // Define the bounds using the map size in pixel
-        tileView.defineRelativeBounds(0, 0, Parameters.TILE_HEIGHT, Parameters.TILE_WIDTH);
+        tileView.defineRelativeBounds(0, 0, Parameters.TILE_WIDTH, Parameters.TILE_HEIGHT);
+
         // Display the TileView
         tileView.setScale(0);
         setContentView(tileView);
@@ -45,7 +49,17 @@ public class MapsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_localize)
+        {
+            // add marker for my position
+            if(myPosition == null)
+            {
+                myPosition = new ImageView(getApplicationContext());
+                myPosition.setImageResource(R.drawable.blue_dot_xl);
+                tileView.addZoomableMarker(myPosition, "blue_dot", 2100, 2000);
+            }
+            tileView.forceZoom(0.75);
+            tileView.moveToMarker(myPosition, true);
             return true;
         }
 
