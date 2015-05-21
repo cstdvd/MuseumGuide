@@ -1,13 +1,16 @@
 package com.dcpdr.museumguide;
-import org.jgrapht.Graph;
-import org.jgrapht.Graphs;
 
-import java.util.Iterator;
+import org.jgrapht.Graphs;
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
+
+
 import java.util.List;
 
 public class MapGraph
 {
-    public class State
+    public static class State
     {
         public String id;
         public String label;
@@ -23,10 +26,9 @@ public class MapGraph
         }
     }
 
-    public class Transition
+    public static class Transition
     {
-        public State start;
-        public State end;
+        public State start, end;
 
         public Transition(State start, State end)
         {
@@ -35,22 +37,26 @@ public class MapGraph
         }
     }
 
-    private Graph<State, Transition> roomGraph;
 
-    public  MapGraph(List<State> vertixList, List<Transition> edgeList)
+    private  UndirectedGraph<State, DefaultEdge> roomGraph;
+
+    public  MapGraph(List<State> vertixList, List<Transition> transList)
     {
-        State v;
-        Transition e;
+        roomGraph = new SimpleGraph<State, DefaultEdge>(DefaultEdge.class);
 
-        for(Iterator<State> iterator=vertixList.iterator(); iterator.hasNext();)
-        {
-            v = iterator.next();
-            roomGraph.addVertex(v);
-        }
-        for(Iterator<Transition> iterator=edgeList.iterator(); iterator.hasNext();)
-        {
-            e = iterator.next();
-            roomGraph.addEdge(e.start, e.end);
-        }
+        // add all vertices
+        for(State s : vertixList)
+            roomGraph.addVertex(s);
+
+        // add all transitions
+        for(Transition t : transList)
+            roomGraph.addEdge(t.start, t.end);
+
+    }
+
+
+    public List<State> getAllNeighbours(State vertix)
+    {
+        return Graphs.neighborListOf(roomGraph, vertix);
     }
 }
