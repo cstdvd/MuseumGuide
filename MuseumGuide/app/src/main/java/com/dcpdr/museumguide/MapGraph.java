@@ -1,11 +1,10 @@
 package com.dcpdr.museumguide;
-
 import org.jgrapht.Graphs;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-
+import java.util.HashMap;
 import java.util.List;
 
 public class MapGraph
@@ -25,16 +24,16 @@ public class MapGraph
             this.coords[1] = y;
         }
     }
-
+    
     public static class Transition
     {
-        public State start, end;
-
-        public Transition(State start, State end)
-        {
-            this.start = start;
-            this.end = end;
-        }
+    	public State start, end;
+    	
+    	public Transition(State start, State end)
+    	{
+    		this.start = start;
+    		this.end = end;
+    	}
     }
 
 
@@ -42,21 +41,40 @@ public class MapGraph
 
     public  MapGraph(List<State> vertixList, List<Transition> transList)
     {
-        roomGraph = new SimpleGraph<State, DefaultEdge>(DefaultEdge.class);
-
-        // add all vertices
+    	roomGraph = new SimpleGraph<State, DefaultEdge>(DefaultEdge.class);
+    	
+    	// add all vertices
         for(State s : vertixList)
-            roomGraph.addVertex(s);
-
+        	roomGraph.addVertex(s);
+        
         // add all transitions
         for(Transition t : transList)
-            roomGraph.addEdge(t.start, t.end);
-
+        	roomGraph.addEdge(t.start, t.end);
+        
     }
-
-
-    public List<State> getAllNeighbours(State vertix)
+    
+    public  MapGraph(HashMap<String, State> vertixList, List<Transition> transList)
     {
-        return Graphs.neighborListOf(roomGraph, vertix);
+    	roomGraph = new SimpleGraph<State, DefaultEdge>(DefaultEdge.class);
+    	
+    	// add all vertices
+        for(State s : vertixList.values())
+        	roomGraph.addVertex(s);
+        
+        // add all transitions
+        for(Transition t : transList)
+        	roomGraph.addEdge(t.start, t.end);
+        
+    }
+    
+    
+    public String getAllNeighbours(State vertix)
+    {
+    	String ret = "";
+    	List<State> tmp =  Graphs.neighborListOf(roomGraph, vertix);
+    	for(State s: tmp)
+    		ret += s.label + " ";
+    	
+    	return ret;
     }
 }

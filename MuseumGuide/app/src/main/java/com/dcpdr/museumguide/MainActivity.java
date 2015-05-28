@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 
-
 public class MainActivity extends ActionBarActivity implements View.OnClickListener
 {
 
