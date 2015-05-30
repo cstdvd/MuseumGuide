@@ -253,10 +253,12 @@
             <stateMember>
               <State gml:id="SS0">
                 <gml:name>SS0</gml:name>
-                <connects gml:id="CON6" />
+                <connects gml:id="CONS0">
+                  <transitionMember xlink:href="#TRS0_1" />
+                </connects>
                 <geometry>
                   <gml:Point gml:id="PTS0">
-                    <gml:pos>1655 1037 0</gml:pos>
+                    <gml:pos>1761 52 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
@@ -264,10 +266,13 @@
             <stateMember>
               <State gml:id="SS1">
                 <gml:name>SS1</gml:name>
-                <connects gml:id="CON7" />
+                <connects gml:id="CONS1">
+                  <transitionMember xlink:href="#TRS0_1" />
+                  <transitionMember xlink:href="#TRS1_2" />
+                </connects>
                 <geometry>
                   <gml:Point gml:id="PTS1">
-                    <gml:pos>1225 1544 0</gml:pos>
+                    <gml:pos>1754 521 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
@@ -275,16 +280,147 @@
             <stateMember>
               <State gml:id="SS2">
                 <gml:name>SS2</gml:name>
-                <connects gml:id="CON8" />
+                <connects gml:id="CONS2">
+                  <transitionMember xlink:href="#TRS1_2" />
+                  <transitionMember xlink:href="#TRS2_3" />
+                  <transitionMember xlink:href="#TRS2_4" />
+                </connects>
                 <geometry>
                   <gml:Point gml:id="PTS2">
-                    <gml:pos>2139 1707 0</gml:pos>
+                    <gml:pos>1746 1066 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+            <stateMember>
+              <State gml:id="SS3">
+                <gml:name>SS3</gml:name>
+                <connects gml:id="CONS3">
+                  <transitionMember xlink:href="#TRS2_3" />
+                  <transitionMember xlink:href="#TRS4_3" />
+                </connects>
+                <geometry>
+                  <gml:Point gml:id="PTS3">
+                    <gml:pos>2114 1636 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+            <stateMember>
+              <State gml:id="SS4">
+                <gml:name>SS4</gml:name>
+                <connects gml:id="CONS4">
+                  <transitionMember xlink:href="#TRS2_4" />
+                  <transitionMember xlink:href="#TRS4_5" />
+                  <transitionMember xlink:href="#TRS4_3" />
+                </connects>
+                <geometry>
+                  <gml:Point gml:id="PTS4">
+                    <gml:pos>1407 1628 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+            <stateMember>
+              <State gml:id="SS5">
+                <gml:name>SS5</gml:name>
+                <connects gml:id="CONS5">
+                  <transitionMember xlink:href="#TRS4_5" />
+                </connects>
+                <geometry>
+                  <gml:Point gml:id="PTS5">
+                    <gml:pos>830 1636 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
             </stateMember>
           </nodes>
-          <edges gml:id="E1" />
+          <edges gml:id="E1">
+            <transitionMember>
+              <Transition gml:id="TRS0_1">
+                <gml:name>TRS0_1</gml:name>
+                <weight>1</weight>
+                <start xlink:href="#SS0" />
+                <end xlink:href="#SS1" />
+                <geometry>
+                  <gml:LineString gml:id="LSS0">
+                    <gml:pos>1761 52 0</gml:pos>
+                    <gml:pos>1754 521 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+            <transitionMember>
+              <Transition gml:id="TRS1_2">
+                <gml:name>TRS1_2</gml:name>
+                <weight>1</weight>
+                <start xlink:href="#SS1" />
+                <end xlink:href="#SS2" />
+                <geometry>
+                  <gml:LineString gml:id="LSS1">
+                    <gml:pos>1754 521 0</gml:pos>
+                    <gml:pos>1746 1066 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+            <transitionMember>
+              <Transition gml:id="TRS2_3">
+                <gml:name>TRS2_3</gml:name>
+                <weight>1</weight>
+                <start xlink:href="#SS2" />
+                <end xlink:href="#SS3" />
+                <geometry>
+                  <gml:LineString gml:id="LSS2">
+                    <gml:pos>1746 1066 0</gml:pos>
+                    <gml:pos>2114 1636 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+            <transitionMember>
+              <Transition gml:id="TRS2_4">
+                <gml:name>TRS2_4</gml:name>
+                <weight>1</weight>
+                <start xlink:href="#SS2" />
+                <end xlink:href="#SS4" />
+                <geometry>
+                  <gml:LineString gml:id="LSS3">
+                    <gml:pos>1746 1066 0</gml:pos>
+                    <gml:pos>1407 1628 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+            <transitionMember>
+              <Transition gml:id="TRS4_5">
+                <gml:name>TRS4_5</gml:name>
+                <weight>1</weight>
+                <start xlink:href="#SS4" />
+                <end xlink:href="#SS5" />
+                <geometry>
+                  <gml:LineString gml:id="LSS4">
+                    <gml:pos>1407 1628 0</gml:pos>
+                    <gml:pos>830 1636 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+            <transitionMember>
+              <Transition gml:id="TRS4_3">
+                <gml:name>TRS4_3</gml:name>
+                <weight>1</weight>
+                <start xlink:href="#SS4" />
+                <end xlink:href="#SS3" />
+                <geometry>
+                  <gml:LineString gml:id="LSS5">
+                    <gml:pos>1407 1628 0</gml:pos>
+                    <gml:pos>2114 1636 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+          </edges>
         </SpaceLayer>
       </spaceLayerMember>
 	</spaceLayers>
@@ -306,7 +442,7 @@
 	  </InterLayerConnection>
 	  <InterLayerConnection gml:id="ILC2">
 	    <interConnects>
-		  <stateMember xlink:href="#ST1" />
+		  <stateMember xlink:href="#ST0" />
 		</interConnects>
 		<interConnects>
 		  <stateMember xlink:href="#SS1" />
@@ -321,10 +457,55 @@
 	  </InterLayerConnection>
 	  <InterLayerConnection gml:id="ILC3">
 	    <interConnects>
-		  <stateMember xlink:href="#ST2" />
+		  <stateMember xlink:href="#ST0" />
 		</interConnects>
 		<interConnects>
 		  <stateMember xlink:href="#SS2" />
+		</interConnects>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL1" />
+		</ConnectedLayers>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL2" />
+		</ConnectedLayers>
+		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
+	  </InterLayerConnection>
+	  <InterLayerConnection gml:id="ILC4">
+	    <interConnects>
+		  <stateMember xlink:href="#ST2" />
+		</interConnects>
+		<interConnects>
+		  <stateMember xlink:href="#SS3" />
+		</interConnects>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL1" />
+		</ConnectedLayers>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL2" />
+		</ConnectedLayers>
+		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
+	  </InterLayerConnection>
+	  <InterLayerConnection gml:id="ILC5">
+	    <interConnects>
+		  <stateMember xlink:href="#ST1" />
+		</interConnects>
+		<interConnects>
+		  <stateMember xlink:href="#SS4" />
+		</interConnects>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL1" />
+		</ConnectedLayers>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL2" />
+		</ConnectedLayers>
+		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
+	  </InterLayerConnection>
+	  <InterLayerConnection gml:id="ILC6">
+	    <interConnects>
+		  <stateMember xlink:href="#ST1" />
+		</interConnects>
+		<interConnects>
+		  <stateMember xlink:href="#SS5" />
 		</interConnects>
 		<ConnectedLayers>
 		  <spaceLayerMember xlink:href="#SL1" />
