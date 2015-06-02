@@ -27,7 +27,7 @@ public class MultilayerMapGraph
 	public MultilayerMapGraph(MapGraph layer1, MapGraph layer2)
 	{
 		mapGraphs = new MapGraph[2];
-		connections = new ArrayList<InterLayerConnection>();
+		connections = new ArrayList<>();
 		
 		mapGraphs[0] = layer1;
 		mapGraphs[1] = layer2;
@@ -56,7 +56,7 @@ public class MultilayerMapGraph
         DijkstraShortestPath DSPath = new DijkstraShortestPath(mapGraphs[layer].getGraph(), startState, endState);
         List<MapGraph.State> stateList = Graphs.getPathVertexList(DSPath.getPath());
 
-        List<String> stringList = new ArrayList<String>();
+        List<String> stringList = new ArrayList<>();
         for(MapGraph.State s : stateList)
             stringList.add(s.id);
 

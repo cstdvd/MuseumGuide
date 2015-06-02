@@ -6,7 +6,6 @@ import org.jgrapht.graph.SimpleGraph;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class MapGraph
 {
@@ -41,23 +40,9 @@ public class MapGraph
     private  UndirectedGraph<State, DefaultEdge> roomGraph;
     private  HashMap<String, State> vertixList;
 
-    public  MapGraph(List<State> vertixList, List<Transition> transList)
-    {
-    	roomGraph = new SimpleGraph<State, DefaultEdge>(DefaultEdge.class);
-    	
-    	// add all vertices
-        for(State s : vertixList)
-        	roomGraph.addVertex(s);
-        
-        // add all transitions
-        for(Transition t : transList)
-        	roomGraph.addEdge(t.start, t.end);
-        
-    }
-    
     public  MapGraph(HashMap<String, State> vertixList, List<Transition> transList)
     {
-    	roomGraph = new SimpleGraph<State, DefaultEdge>(DefaultEdge.class);
+    	roomGraph = new SimpleGraph<>(DefaultEdge.class);
     	this.vertixList = vertixList;
     	
     	// add all vertices

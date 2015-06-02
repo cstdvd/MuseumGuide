@@ -35,7 +35,7 @@ public class MapsActivity extends ActionBarActivity {
         Element roomEdges = (Element) roomSpaceLayer.getElementsByTagName(Parameters.GML_EDGES).item(0);
         // get stateMember and get informations
         NodeList roomStateMembers = roomNodes.getElementsByTagName(Parameters.GML_STMEMB);
-        HashMap<String, MapGraph.State> stateMap = new HashMap<String, MapGraph.State>();
+        HashMap<String, MapGraph.State> stateMap = new HashMap<>();
         // define temp vars and get state's informations
         Element stateMemb, state, gmlGeom, gmlPoint;
         String id, label, tempStr;
@@ -60,7 +60,7 @@ public class MapsActivity extends ActionBarActivity {
         }
         // get TransitionMember and get start and end states
         NodeList roomTransitionMembers = roomEdges.getElementsByTagName(Parameters.GML_TRMEMB);
-        List<MapGraph.Transition> transList = new ArrayList<MapGraph.Transition>();
+        List<MapGraph.Transition> transList = new ArrayList<>();
         // define temp vars and get transition's informations
         Element transMember, trans, start, end;
         MapGraph.State startState, endState;
