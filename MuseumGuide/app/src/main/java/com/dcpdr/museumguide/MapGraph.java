@@ -90,4 +90,9 @@ public class MapGraph
     {
     	return vertixList.get(id);
     }
+
+    public UndirectedGraph<State,DefaultEdge> getGraph()
+    {
+        return roomGraph;
+    }
 }

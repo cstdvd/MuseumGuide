@@ -1,5 +1,8 @@
 package com.dcpdr.museumguide;
 
+import org.jgrapht.Graphs;
+import org.jgrapht.alg.DijkstraShortestPath;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,4 +48,20 @@ public class MultilayerMapGraph
 
         return new String(connection.start.id +" <-> "+ connection.end.id);
 	}
+
+    public List<String> getPath(int layer, String startId, String endId)
+    {
+        MapGraph.State startState = mapGraphs[layer].getState(startId);
+        MapGraph.State endState = mapGraphs[layer].getState(endId);
+
+
+        DijkstraShortestPath DSPath = new DijkstraShortestPath(mapGraphs[layer].getGraph(), startState, endState);
+        List<MapGraph.State> stateList = Graphs.getPathVertexList(DSPath.getPath());
+
+        List<String> stringList = new ArrayList<String>();
+        for(MapGraph.State s : stateList)
+            stringList.add(s.id);
+
+        return stringList;
+    }
 }
