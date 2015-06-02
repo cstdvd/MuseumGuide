@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MuseumGuide.iml" filepath="$PROJECT_DIR$/MuseumGuide.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/estimote-sdk-preview/estimote-sdk-preview.iml" filepath="$PROJECT_DIR$/estimote-sdk-preview/estimote-sdk-preview.iml" />
     </modules>
   </component>
 </project>
