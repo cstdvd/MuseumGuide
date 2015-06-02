@@ -39,6 +39,10 @@ public class Parameters {
     public static final double ZOOM_L = 0.75;
     public static final double ZOOM_M = 0.60;
     public static final double ZOOM_S = 0.40;
+    
+    // MapGraphMain parameters
+    public static final int ROOMS = 0;
+    public static final int SENSORS = 1;
 
     // General parameters
     public static final String PACKAGE_NAME = "com.dcpdr.museumguide";
