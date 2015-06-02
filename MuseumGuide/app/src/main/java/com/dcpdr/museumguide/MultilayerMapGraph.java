@@ -33,7 +33,7 @@ public class MultilayerMapGraph
 		mapGraphs[1] = layer2;
 	}
 	
-	public String addInterConnection(MapGraph.State state1, MapGraph.State state2)
+	public void addInterConnection(MapGraph.State state1, MapGraph.State state2)
 	{
 		InterLayerConnection connection;
 		
@@ -42,11 +42,9 @@ public class MultilayerMapGraph
 		if(mapGraphs[0].contains(state1) && mapGraphs[1].contains(state2))
 			connection = new InterLayerConnection(state1, state2);
 		else
-			return null;
+			return;
 		
 		connections.add(connection);
-
-        return new String(connection.start.id +" <-> "+ connection.end.id);
 	}
 
     public List<String> getPath(int layer, String startId, String endId)
