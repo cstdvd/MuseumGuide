@@ -1,1 +1,1 @@
-include ':app', ':estimote-sdk-preview'
+include ':app'
