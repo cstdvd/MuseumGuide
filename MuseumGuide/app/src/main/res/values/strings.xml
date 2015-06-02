@@ -3,4 +3,5 @@
     <string name="action_localize">Localize</string>
     <string name="enter_button">Enter</string>
     <string name="title_activity_maps">Navigation</string>
+    <string name="no_bluetooth">Device does not have Bluetooth Low Energy</string>
 </resources>

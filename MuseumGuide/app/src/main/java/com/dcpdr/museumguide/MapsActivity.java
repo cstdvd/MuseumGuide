@@ -1,10 +1,17 @@
 package com.dcpdr.museumguide;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.estimote.sdk.Beacon;
+import com.estimote.sdk.BeaconManager;
+import com.estimote.sdk.Region;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,8 +25,12 @@ import java.util.List;
 
 public class MapsActivity extends ActionBarActivity {
 
-   private XTileView tileView;
-   private ImageView myPosition;
+    private static final int REQUEST_ENABLE_BT = 1234;
+
+    private XTileView tileView;
+    private ImageView myPosition;
+
+    private BeaconManager beaconManager;
 
     private MapGraph createGraph(Document document, int level)
     {
@@ -169,5 +180,30 @@ public class MapsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initialize(){
+        Beacon beacon;
+
+        beaconManager = new BeaconManager(this);
+
+        // Check if device supports Bluetooth Low Energy.
+        if (!beaconManager.hasBluetooth()) {
+            Toast.makeText(this, getResources().getString(R.string.no_bluetooth), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // If Bluetooth is not enabled, let user enable it.
+        if (!beaconManager.isBluetoothEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+
+        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
+            @Override
+            public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
+                String name = beacons.get(0).getName();
+            }
+        });
     }
 }
