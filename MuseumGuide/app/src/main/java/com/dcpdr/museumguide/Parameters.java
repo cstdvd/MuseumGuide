@@ -1,5 +1,7 @@
 package com.dcpdr.museumguide;
 
+import java.util.HashMap;
+
 // Parameters class: it defines application parameters
 public class Parameters {
     
@@ -46,4 +48,12 @@ public class Parameters {
 
     // General parameters
     public static final String PACKAGE_NAME = "com.dcpdr.museumguide";
+
+    // HashMap mapping
+    public static final HashMap<String,String> nameMap = new HashMap<String,String>(){
+        {
+            put("COD1","SS0");
+        }
+    };
+
 }

@@ -183,8 +183,6 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     private void initialize(){
-        Beacon beacon;
-
         beaconManager = new BeaconManager(this);
 
         // Check if device supports Bluetooth Low Energy.
@@ -203,6 +201,9 @@ public class MapsActivity extends ActionBarActivity {
             @Override
             public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
                 String name = beacons.get(0).getName();
+                String mac = beacons.get(0).getMacAddress();
+                Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), mac, Toast.LENGTH_LONG).show();
             }
         });
     }
