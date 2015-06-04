@@ -1,5 +1,7 @@
 package com.dcpdr.museumguide;
 
+import com.estimote.sdk.Region;
+
 import java.util.HashMap;
 
 // Parameters class: it defines application parameters
@@ -48,6 +50,10 @@ public class Parameters {
 
     // General parameters
     public static final String PACKAGE_NAME = "com.dcpdr.museumguide";
+
+    // Estimote parameters
+    public static final int REQUEST_ENABLE_BT = 1234;
+    public static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("rid", null, null, null);
 
     // HashMap mapping
     public static final HashMap<String,String> nameMap = new HashMap<String,String>(){

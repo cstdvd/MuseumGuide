@@ -2,8 +2,10 @@ package com.dcpdr.museumguide;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
+import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.Region;
 
 import org.w3c.dom.Document;
@@ -24,8 +27,6 @@ import java.util.List;
 
 
 public class MapsActivity extends ActionBarActivity {
-
-    private static final int REQUEST_ENABLE_BT = 1234;
 
     private XTileView tileView;
     private ImageView myPosition;
@@ -147,14 +148,64 @@ public class MapsActivity extends ActionBarActivity {
         // Display the TileView
         tileView.setScale(0);
         setContentView(tileView);
-    }
 
+        // Initialize Estimote
+        initialize();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_maps, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        beaconManager.disconnect();
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Check if device supports Bluetooth Low Energy.
+        if (!beaconManager.hasBluetooth()) {
+            Toast.makeText(this, "Device does not have Bluetooth Low Energy", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // If Bluetooth is not enabled, let user enable it.
+        if (!beaconManager.isBluetoothEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, Parameters.REQUEST_ENABLE_BT);
+        } else {
+            connectToService();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        try {
+            beaconManager.stopRanging(Parameters.ALL_ESTIMOTE_BEACONS_REGION);
+        } catch (RemoteException e) {
+        }
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Parameters.REQUEST_ENABLE_BT) {
+            if (resultCode == ActionBarActivity.RESULT_OK) {
+                connectToService();
+            } else {
+                Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -182,28 +233,36 @@ public class MapsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void connectToService() {
+        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+            @Override
+            public void onServiceReady() {
+                try {
+                    beaconManager.startRanging(Parameters.ALL_ESTIMOTE_BEACONS_REGION);
+                } catch (RemoteException e) {
+                    Toast.makeText(getApplicationContext(), "Cannot start ranging", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
     private void initialize(){
+        // Configure BeaconManager.
         beaconManager = new BeaconManager(this);
-
-        // Check if device supports Bluetooth Low Energy.
-        if (!beaconManager.hasBluetooth()) {
-            Toast.makeText(this, getResources().getString(R.string.no_bluetooth), Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        // If Bluetooth is not enabled, let user enable it.
-        if (!beaconManager.isBluetoothEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
-                String name = beacons.get(0).getName();
-                String mac = beacons.get(0).getMacAddress();
-                Toast.makeText(getApplicationContext(), name, Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), mac, Toast.LENGTH_LONG).show();
+                // Note that results are not delivered on UI thread.
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Note that beacons reported here are already sorted by estimated
+                        // distance between device and beacon.
+                        if(beacons.size()>0)
+                            Toast.makeText(getApplicationContext(),
+                                    "Found beacons: " + beacons.get(0).getMacAddress(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
