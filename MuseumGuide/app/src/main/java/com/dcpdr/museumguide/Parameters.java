@@ -56,9 +56,9 @@ public class Parameters {
     public static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("rid", null, null, null);
 
     // HashMap mapping
-    public static final HashMap<String,String> nameMap = new HashMap<String,String>(){
+    public static final HashMap<String,String> idMap = new HashMap<String,String>(){
         {
-            put("COD1","SS0");
+            put("8492e75f-4fd6-469d-b132-043fe94921d8","SS0");
         }
     };
 

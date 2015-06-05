@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
-import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.Region;
 
 import org.w3c.dom.Document;
@@ -33,8 +31,7 @@ public class MapsActivity extends ActionBarActivity {
 
     private BeaconManager beaconManager;
 
-    private MapGraph createGraph(Document document, int level)
-    {
+    private MapGraph createGraph(Document document, int level) {
         Element multiLayeredGraph = (Element) document.getElementsByTagName(Parameters.GML_MLG).item(0);
         Element spaceLayers = (Element) multiLayeredGraph.getElementsByTagName(Parameters.GML_SLS).item(0);
         NodeList spaceLayersMembers = spaceLayers.getElementsByTagName(Parameters.GML_SLM);
@@ -52,8 +49,7 @@ public class MapsActivity extends ActionBarActivity {
         Element stateMemb, state, gmlGeom, gmlPoint;
         String id, label, tempStr;
         int coords[] = new int[2];
-        for(int i=0; i<roomStateMembers.getLength(); i++)
-        {
+        for (int i = 0; i < roomStateMembers.getLength(); i++) {
             stateMemb = (Element) roomStateMembers.item(i);
             state = (Element) stateMemb.getElementsByTagName(Parameters.GML_STATE).item(0);
             // get id
@@ -76,8 +72,7 @@ public class MapsActivity extends ActionBarActivity {
         // define temp vars and get transition's informations
         Element transMember, trans, start, end;
         MapGraph.State startState, endState;
-        for(int i = 0; i<roomTransitionMembers.getLength(); i++)
-        {
+        for (int i = 0; i < roomTransitionMembers.getLength(); i++) {
             transMember = (Element) roomTransitionMembers.item(i);
             trans = (Element) transMember.getElementsByTagName(Parameters.GML_TRANS).item(0);
             // get start State
@@ -94,6 +89,7 @@ public class MapsActivity extends ActionBarActivity {
         // construct the Graph
         return new MapGraph(stateMap, transList);
     }
+    MultilayerMapGraph multigraph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,20 +97,19 @@ public class MapsActivity extends ActionBarActivity {
 
         // Load gml file and create graphs
         Document document = null;
-        try
-        {
+        try {
             InputStream xml = this.getAssets().open(Parameters.MAP_FILE);
             XMLParser parser = new XMLParser(xml);
             document = parser.getDocument();
+        } catch (Exception e) {
         }
-        catch(Exception e){}
 
         // Create room graph and sensor graph
         MapGraph roomGraph = createGraph(document, Parameters.ROOMS);
         MapGraph sensorGraph = createGraph(document, Parameters.SENSORS);
 
         // Create multilayer graph with room graph and sensor graph
-        MultilayerMapGraph multigraph = new MultilayerMapGraph(roomGraph, sensorGraph);
+        multigraph = new MultilayerMapGraph(roomGraph, sensorGraph);
 
         MapGraph.State room0 = roomGraph.getState("ST0");
         MapGraph.State room1 = roomGraph.getState("ST1");
@@ -216,11 +211,9 @@ public class MapsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_localize)
-        {
+        if (id == R.id.action_localize) {
             // add marker for my position
-            if(myPosition == null)
-            {
+            if (myPosition == null) {
                 myPosition = new ImageView(getApplicationContext());
                 myPosition.setImageResource(R.drawable.blue_dot_xl);
                 tileView.addZoomableMarker(myPosition, "blue_dot", 2100, 2000);
@@ -246,9 +239,10 @@ public class MapsActivity extends ActionBarActivity {
         });
     }
 
-    private void initialize(){
+    private void initialize() {
         // Configure BeaconManager.
         beaconManager = new BeaconManager(this);
+
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
@@ -258,12 +252,24 @@ public class MapsActivity extends ActionBarActivity {
                     public void run() {
                         // Note that beacons reported here are already sorted by estimated
                         // distance between device and beacon.
-                        if(beacons.size()>0)
-                            Toast.makeText(getApplicationContext(),
-                                    "Found beacons: " + beacons.get(0).getMacAddress(), Toast.LENGTH_SHORT).show();
+                        if (beacons.size() > 0)
+                            getRoom(beacons.get(0).getProximityUUID());
                     }
                 });
             }
         });
+    }
+
+    // Return sensor id <-> beacon uuid
+    private String getSensorId(String uuid)
+    {
+        return Parameters.idMap.get(uuid);
+    }
+
+    private void getRoom(String uuid)
+    {
+        String sensorId = getSensorId(uuid);
+        MapGraph.State room = multigraph.getConnectedState(Parameters.SENSORS, sensorId);
+        Toast.makeText(getApplicationContext(),room.id,Toast.LENGTH_SHORT).show();
     }
 }

@@ -62,4 +62,26 @@ public class MultilayerMapGraph
 
         return stringList;
     }
+
+    public MapGraph getGraph(int layer)
+    {
+        return mapGraphs[layer];
+    }
+
+    // Returns connected state from state's id and its layer
+    public MapGraph.State getConnectedState(int layer, String id)
+    {
+        MapGraph.State state = mapGraphs[layer].getState(id);
+
+        for(MultilayerMapGraph.InterLayerConnection i : connections)
+        {
+            if(layer == Parameters.SENSORS)
+                if(i.end.id == state.id)
+                    return i.start;
+            else if(layer == Parameters.ROOMS)
+                if(i.start.id == state.id)
+                    return i.end;
+        }
+        return null;
+    }
 }
