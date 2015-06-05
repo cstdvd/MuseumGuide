@@ -90,6 +90,7 @@ public class MapsActivity extends ActionBarActivity {
         return new MapGraph(stateMap, transList);
     }
     MultilayerMapGraph multigraph;
+    MapGraph.State myRoom, mySensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +136,9 @@ public class MapsActivity extends ActionBarActivity {
         // Setup the TileView
         tileView.setSize(Parameters.TILE_WIDTH, Parameters.TILE_HEIGHT);
         for (int i = 0; i < Parameters.DETAIL_SCALES.length; i++)
-            tileView.addDetailLevel(Parameters.DETAIL_SCALES[i], Parameters.TILES_PATH + Parameters.DETAIL_SCALES[i] * 100 + "/%col%_%row%" + Parameters.TILE_EXTENSION, Parameters.SAMPLE_IMAGE, Parameters.TILE_SIZE, Parameters.TILE_SIZE);
+            tileView.addDetailLevel(Parameters.DETAIL_SCALES[i],
+                    Parameters.TILES_PATH + Parameters.DETAIL_SCALES[i] * 100 + "/%col%_%row%" + Parameters.TILE_EXTENSION,
+                    Parameters.SAMPLE_IMAGE, Parameters.TILE_SIZE, Parameters.TILE_SIZE);
 
         // Define the bounds using the map size in pixel
         tileView.defineRelativeBounds(0, 0, Parameters.TILE_WIDTH, Parameters.TILE_HEIGHT);
@@ -252,8 +255,9 @@ public class MapsActivity extends ActionBarActivity {
                     public void run() {
                         // Note that beacons reported here are already sorted by estimated
                         // distance between device and beacon.
-                        if (beacons.size() > 0)
+                        if (beacons.size() > 0) {
                             getRoom(beacons.get(0).getProximityUUID());
+                        }
                     }
                 });
             }
@@ -266,10 +270,30 @@ public class MapsActivity extends ActionBarActivity {
         return Parameters.idMap.get(uuid);
     }
 
+    // Image has origin coordinates in Top Left,
+    // map has origin coordinates in Bottom Left, so y must be changed
+    private MapGraph.State changeCoords(MapGraph.State state)
+    {
+        MapGraph.State ret = new MapGraph.State(state);
+        ret.coords[1] = Parameters.TILE_HEIGHT - ret.coords[1];
+        return ret;
+    }
+
     private void getRoom(String uuid)
     {
         String sensorId = getSensorId(uuid);
-        MapGraph.State room = multigraph.getConnectedState(Parameters.SENSORS, sensorId);
-        Toast.makeText(getApplicationContext(),room.id,Toast.LENGTH_SHORT).show();
+        myRoom = multigraph.getConnectedState(Parameters.SENSORS, sensorId);
+        mySensor = multigraph.getState(Parameters.SENSORS, sensorId);
+        mySensor = changeCoords(mySensor);
+        //Toast.makeText(getApplicationContext(),myRoom.id,Toast.LENGTH_SHORT).show();
+
+
+        // Add position dot
+        if (myPosition == null) {
+            myPosition = new ImageView(getApplicationContext());
+            myPosition.setImageResource(R.drawable.blue_dot_m);
+            tileView.addZoomableMarker(myPosition, "blue_dot", mySensor.coords[0]-38, mySensor.coords[1]-38);
+            Toast.makeText(getApplicationContext(),mySensor.id+" "+mySensor.coords[0] +" "+mySensor.coords[1],Toast.LENGTH_SHORT).show();
+        }
     }
 }

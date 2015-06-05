@@ -23,6 +23,15 @@ public class MapGraph
             this.coords[0] = x;
             this.coords[1] = y;
         }
+
+        public State(State state)
+        {
+            this.id = state.id;
+            this.label = state.label;
+            this.coords = new int[2];
+            this.coords[0] = state.coords[0];
+            this.coords[1] = state.coords[1];
+        }
     }
     
     public static class Transition
