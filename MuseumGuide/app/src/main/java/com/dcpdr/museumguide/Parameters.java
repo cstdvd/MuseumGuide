@@ -39,10 +39,15 @@ public class Parameters {
     public static final String GML_ATTR_XREF = "xlink:href";
 
     // XTileView zoom thresholds
-    public static final double ZOOM_XL = 0.9;
-    public static final double ZOOM_L = 0.75;
-    public static final double ZOOM_M = 0.60;
-    public static final double ZOOM_S = 0.40;
+    public static final double ZOOM_0 = 0.2;
+    public static final double ZOOM_1 = 0.25;
+    public static final double ZOOM_2 = 0.3;
+    public static final double ZOOM_3 = 0.35;
+    public static final double ZOOM_4 = 0.40;
+    public static final double ZOOM_5 = 0.5;
+    public static final double ZOOM_6 = 0.6;
+    public static final double ZOOM_7 = 0.7;
+    public static final double ZOOM_8 = 0.8;
     
     // MapGraphMain parameters
     public static final int ROOMS = 0;

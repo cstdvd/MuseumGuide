@@ -5,6 +5,7 @@ package com.dcpdr.museumguide;
 // folder with their corresponding names.
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,12 +24,17 @@ public class XTileView extends TileView
     {
         public ImageView imageView;
         public String imageBaseName;
+        public double[] coords;
 
-        public Marker(ImageView imageView, String imageBaseName)
+        public Marker(ImageView imageView, String imageBaseName, double coordX, double coordY)
         {
             this.imageView = imageView;
             this.imageBaseName = imageBaseName;
+            coords = new double[2];
+            coords[0] = coordX;
+            coords[1] = coordY;
         }
+
     }
 
 
@@ -38,28 +44,39 @@ public class XTileView extends TileView
     private class XTileViewEventListener extends TileViewEventListenerImplementation
     {
         @Override
-        public void onZoomComplete(double scale)
+        public void onScaleChanged(double scale)
         {
             XTileView extObj = XTileView.this;
             Marker tmp;
             String zoomLevel;
             int resId;
+            int shiftX, shiftY;
 
             // get the current zoom level
-            if(scale <= Parameters.ZOOM_S)
-                zoomLevel = "s";
-            else if(scale <= Parameters.ZOOM_M)
-                zoomLevel = "m";
-            else if(scale <= Parameters.ZOOM_L)
-                zoomLevel = "l";
+            if(scale <= Parameters.ZOOM_3)
+                zoomLevel = "0";
+            else if(scale <= Parameters.ZOOM_4)
+                zoomLevel = "1";
+            else if(scale <= Parameters.ZOOM_5)
+                zoomLevel = "2";
+            else if(scale <= Parameters.ZOOM_6)
+                zoomLevel = "3";
+            else if(scale <= Parameters.ZOOM_7)
+                zoomLevel = "4";
+            else if(scale <= Parameters.ZOOM_8)
+                zoomLevel = "5";
             else
-                zoomLevel = "xl";
+                zoomLevel = "6";
             // change all zoomable markers
             for(Iterator<Marker> iterator = extObj.markerList.iterator(); iterator.hasNext(); )
             {
                 tmp = iterator.next();
-                resId = getResources().getIdentifier(tmp.imageBaseName + "_" + zoomLevel, "drawable",Parameters.PACKAGE_NAME);
+                resId = getResources().getIdentifier(tmp.imageBaseName + "_" + zoomLevel, "drawable", Parameters.PACKAGE_NAME);
                 tmp.imageView.setImageResource(resId);
+                BitmapDrawable bd=(BitmapDrawable) getResources().getDrawable(resId);
+                shiftX = (int) ((bd.getBitmap().getWidth()) * (int)scale % 0.25);
+                shiftY = (int) ((bd.getBitmap().getHeight()) * (int)scale % 0.25);
+                extObj.moveMarker(tmp.imageView, tmp.coords[0] - shiftX, tmp.coords[1] - shiftY);
             }
         }
     }
@@ -80,7 +97,7 @@ public class XTileView extends TileView
 
     public void addZoomableMarker(View view, String imageBaseName, double x, double y)
     {
-        markerList.add(new XTileView.Marker((ImageView) view, imageBaseName));
+        markerList.add(new XTileView.Marker((ImageView) view, imageBaseName, x, y));
         super.addMarker(view, x, y);
     }
 

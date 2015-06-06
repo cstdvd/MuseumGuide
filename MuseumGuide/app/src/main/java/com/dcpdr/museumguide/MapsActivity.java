@@ -218,7 +218,7 @@ public class MapsActivity extends ActionBarActivity {
             // add marker for my position
             if (myPosition == null) {
                 myPosition = new ImageView(getApplicationContext());
-                myPosition.setImageResource(R.drawable.blue_dot_xl);
+                myPosition.setImageResource(R.drawable.blue_dot_7);
                 tileView.addZoomableMarker(myPosition, "blue_dot", 2100, 2000);
             }
             tileView.forceZoom(0.75);
@@ -291,7 +291,7 @@ public class MapsActivity extends ActionBarActivity {
         // Add position dot
         if (myPosition == null) {
             myPosition = new ImageView(getApplicationContext());
-            myPosition.setImageResource(R.drawable.blue_dot_m);
+            myPosition.setImageResource(R.drawable.blue_dot_7);
             tileView.addZoomableMarker(myPosition, "blue_dot", mySensor.coords[0]-38, mySensor.coords[1]-38);
             Toast.makeText(getApplicationContext(),mySensor.id+" "+mySensor.coords[0] +" "+mySensor.coords[1],Toast.LENGTH_SHORT).show();
         }
