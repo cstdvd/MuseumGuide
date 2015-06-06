@@ -50,7 +50,7 @@ public class XTileView extends TileView
             Marker tmp;
             String zoomLevel;
             int resId;
-            int shiftX, shiftY;
+            double shiftX, shiftY;
 
             // get the current zoom level
             if(scale <= Parameters.ZOOM_3)
@@ -74,8 +74,8 @@ public class XTileView extends TileView
                 resId = getResources().getIdentifier(tmp.imageBaseName + "_" + zoomLevel, "drawable", Parameters.PACKAGE_NAME);
                 tmp.imageView.setImageResource(resId);
                 BitmapDrawable bd=(BitmapDrawable) getResources().getDrawable(resId);
-                shiftX = (int) ((bd.getBitmap().getWidth()) * (int)scale % 0.25);
-                shiftY = (int) ((bd.getBitmap().getHeight()) * (int)scale % 0.25);
+                shiftX = ((bd.getBitmap().getWidth()/2));
+                shiftY = ((bd.getBitmap().getHeight()/2));
                 extObj.moveMarker(tmp.imageView, tmp.coords[0] - shiftX, tmp.coords[1] - shiftY);
             }
         }
@@ -116,6 +116,6 @@ public class XTileView extends TileView
     public void forceZoom(double scale)
     {
         super.setScale(scale);
-        xListener.onZoomComplete(scale);
+        xListener.onScaleChanged(scale);
     }
 }

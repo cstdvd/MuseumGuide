@@ -258,7 +258,7 @@
                 </connects>
                 <geometry>
                   <gml:Point gml:id="PTS0">
-                    <gml:pos>1761 52 0</gml:pos>
+                    <gml:pos>1750 288 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
@@ -272,7 +272,7 @@
                 </connects>
                 <geometry>
                   <gml:Point gml:id="PTS1">
-                    <gml:pos>1754 521 0</gml:pos>
+                    <gml:pos>1750 738 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
@@ -287,7 +287,7 @@
                 </connects>
                 <geometry>
                   <gml:Point gml:id="PTS2">
-                    <gml:pos>1746 1066 0</gml:pos>
+                    <gml:pos>1750 1288 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>

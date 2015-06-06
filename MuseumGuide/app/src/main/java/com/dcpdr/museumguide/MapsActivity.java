@@ -216,13 +216,10 @@ public class MapsActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_localize) {
             // add marker for my position
-            if (myPosition == null) {
-                myPosition = new ImageView(getApplicationContext());
-                myPosition.setImageResource(R.drawable.blue_dot_7);
-                tileView.addZoomableMarker(myPosition, "blue_dot", 2100, 2000);
+            if (myPosition != null) {
+                tileView.forceZoom(0.75);
+                tileView.moveToMarker(myPosition, true);
             }
-            tileView.forceZoom(0.75);
-            tileView.moveToMarker(myPosition, true);
             return true;
         }
 
@@ -292,8 +289,10 @@ public class MapsActivity extends ActionBarActivity {
         if (myPosition == null) {
             myPosition = new ImageView(getApplicationContext());
             myPosition.setImageResource(R.drawable.blue_dot_7);
-            tileView.addZoomableMarker(myPosition, "blue_dot", mySensor.coords[0]-38, mySensor.coords[1]-38);
-            Toast.makeText(getApplicationContext(),mySensor.id+" "+mySensor.coords[0] +" "+mySensor.coords[1],Toast.LENGTH_SHORT).show();
-        }
+            tileView.addZoomableMarker(myPosition, "blue_dot", mySensor.coords[0], mySensor.coords[1]);
+            tileView.forceZoom(0.75);
+            tileView.moveToMarker(myPosition, true);
+        }else
+            tileView.moveMarker(myPosition, mySensor.coords[0], mySensor.coords[1]);
     }
 }
