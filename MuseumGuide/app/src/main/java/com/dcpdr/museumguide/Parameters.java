@@ -38,6 +38,9 @@ public class Parameters {
     public static final String GML_ENDNODE = "end";
     public static final String GML_ATTR_XREF = "xlink:href";
 
+    // Items parameters
+    public static final String ITEM_FILE = "maps/items.xml";
+
     // XTileView zoom thresholds
     public static final double ZOOM_0 = 0.2;
     public static final double ZOOM_1 = 0.25;

@@ -17,6 +17,7 @@ import com.estimote.sdk.Region;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
@@ -26,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 
 public class MapsActivity extends ActionBarActivity {
 
@@ -33,7 +37,9 @@ public class MapsActivity extends ActionBarActivity {
     private ImageView myPosition;
 
     private BeaconManager beaconManager;
+    private ArrayList<Picture> pictures;
 
+    // Takes GML document and graph's layer and returns the graph
     private MapGraph createGraph(Document document, int level) {
         Element multiLayeredGraph = (Element) document.getElementsByTagName(Parameters.GML_MLG).item(0);
         Element spaceLayers = (Element) multiLayeredGraph.getElementsByTagName(Parameters.GML_SLS).item(0);
@@ -92,6 +98,33 @@ public class MapsActivity extends ActionBarActivity {
         // construct the Graph
         return new MapGraph(stateMap, transList);
     }
+
+    // Takes the document and returns the list of the pictures
+    private ArrayList<Picture> getPictures(Document document)
+    {
+        document.getDocumentElement().normalize();
+        NodeList nodes = document.getElementsByTagName("pictures");
+
+        String name, author, description, sensor;
+        ArrayList<Picture> pics = new ArrayList<>();
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+                name = element.getElementsByTagName("name").item(0).getTextContent();
+                author = element.getElementsByTagName("author").item(0).getTextContent();
+                description = element.getElementsByTagName("description").item(0).getTextContent();
+                sensor = element.getElementsByTagName("id").item(0).getTextContent();
+
+                Picture picture = new Picture(name, author, description, sensor);
+                pics.add(picture);
+            }
+        }
+
+        return pics;
+    }
+
     public MultilayerMapGraph multigraph;
     public MapGraph.State myRoom, mySensor;
 
@@ -133,6 +166,16 @@ public class MapsActivity extends ActionBarActivity {
         multigraph.addInterConnection(room1, sensor4);
         multigraph.addInterConnection(room1, sensor5);
 
+        // Create navigable items
+        Document doc = null;
+        try {
+            InputStream xml = this.getAssets().open(Parameters.ITEM_FILE);
+            XMLParser parser = new XMLParser(xml);
+            doc = parser.getDocument();
+        } catch (Exception e) {
+        }
+
+        pictures = getPictures(doc);
 
         // Create a TileView object
         tileView = new XTileView(this);
