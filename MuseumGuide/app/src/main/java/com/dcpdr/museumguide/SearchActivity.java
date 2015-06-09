@@ -20,17 +20,17 @@ public class SearchActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        ArrayList<MapGraph.State> states = getIntent().getParcelableArrayListExtra("States");
+        ArrayList<Picture> pictures = getIntent().getParcelableArrayListExtra("Pictures");
 
-        ArrayList<String> labels = new ArrayList<>();
-        for(MapGraph.State s : states)
-            labels.add(s.label);
+        ArrayList<String> names = new ArrayList<>();
+        for(Picture p : pictures)
+            names.add(p.name);
 
-        Collections.sort(labels);
+        Collections.sort(names);
 
         final ListView mylist = (ListView) findViewById(R.id.searchList);
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String> (this,android.R.layout.simple_list_item_1, labels);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String> (this,android.R.layout.simple_list_item_1, names);
         mylist.setAdapter(adapter);
     }
 

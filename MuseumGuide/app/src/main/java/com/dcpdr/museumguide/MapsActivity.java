@@ -21,15 +21,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 
 public class MapsActivity extends ActionBarActivity {
 
@@ -102,24 +96,21 @@ public class MapsActivity extends ActionBarActivity {
     // Takes the document and returns the list of the pictures
     private ArrayList<Picture> getPictures(Document document)
     {
-        document.getDocumentElement().normalize();
-        NodeList nodes = document.getElementsByTagName("pictures");
+        NodeList nodes = document.getElementsByTagName("picture");
 
         String name, author, description, sensor;
         ArrayList<Picture> pics = new ArrayList<>();
 
         for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element element = (Element) node;
-                name = element.getElementsByTagName("name").item(0).getTextContent();
-                author = element.getElementsByTagName("author").item(0).getTextContent();
-                description = element.getElementsByTagName("description").item(0).getTextContent();
-                sensor = element.getElementsByTagName("id").item(0).getTextContent();
+            Element element = (Element) nodes.item(i);
 
-                Picture picture = new Picture(name, author, description, sensor);
-                pics.add(picture);
-            }
+            name = element.getElementsByTagName("name").item(0).getTextContent();
+            author = element.getElementsByTagName("author").item(0).getTextContent();
+            description = element.getElementsByTagName("description").item(0).getTextContent();
+            sensor = element.getElementsByTagName("id").item(0).getTextContent();
+
+            Picture picture = new Picture(name, author, description, sensor);
+            pics.add(picture);
         }
 
         return pics;
@@ -269,11 +260,11 @@ public class MapsActivity extends ActionBarActivity {
         }else if (id == R.id.action_search){
             Intent nextActivityIntent = new Intent(this, SearchActivity.class);
 
-            ArrayList<MapGraph.State> states = new ArrayList<>();
+            /* ArrayList<MapGraph.State> states = new ArrayList<>();
             Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
-            states.addAll(set);
+            states.addAll(set); */
 
-            nextActivityIntent.putParcelableArrayListExtra("States", states);
+            nextActivityIntent.putParcelableArrayListExtra("Pictures", pictures);
             startActivity(nextActivityIntent);
         }
 
