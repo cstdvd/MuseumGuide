@@ -118,4 +118,20 @@ public class XTileView extends TileView
         super.setScale(scale);
         xListener.onScaleChanged(scale);
     }
+
+    @Override
+    public void moveMarker(View view, double x, double y)
+    {
+        Marker tmp = null;
+        for(Iterator<Marker> iterator = markerList.iterator(); iterator.hasNext(); )
+        {
+            tmp = iterator.next();
+            if(tmp.imageView == view)
+                break;
+        }
+        tmp.coords[0] = x;
+        tmp.coords[1] = y;
+        super.moveMarker(view, x, y);
+
+    }
 }
