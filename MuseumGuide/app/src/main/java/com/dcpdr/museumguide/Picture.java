@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Picture implements Parcelable{
-    public String name, author;
+    private String name, author;
     private String description;
     private String sensorId;
 
@@ -16,6 +16,26 @@ public class Picture implements Parcelable{
         this.author = author;
         this.description = description;
         this.sensorId = sensorId;
+    }
+
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public String getAuthor()
+    {
+        return this.author;
+    }
+
+    public String getDescription()
+    {
+        return this.description;
+    }
+
+    public String getSensorId()
+    {
+        return this.sensorId;
     }
 
     // Parcelable methods

@@ -13,7 +13,8 @@ import java.util.Collections;
 import java.util.Set;
 
 
-public class SearchActivity extends ActionBarActivity {
+public class SearchActivity extends ActionBarActivity
+{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,16 +23,10 @@ public class SearchActivity extends ActionBarActivity {
 
         ArrayList<Picture> pictures = getIntent().getParcelableArrayListExtra("Pictures");
 
-        ArrayList<String> names = new ArrayList<>();
-        for(Picture p : pictures)
-            names.add(p.name);
+        final ListView listView = (ListView) findViewById(R.id.searchList);
 
-        Collections.sort(names);
-
-        final ListView mylist = (ListView) findViewById(R.id.searchList);
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String> (this,android.R.layout.simple_list_item_1, names);
-        mylist.setAdapter(adapter);
+        ItemsAdapter adapter = new ItemsAdapter(this, R.layout.listactivity_row, pictures);
+        listView.setAdapter(adapter);
     }
 
     @Override
