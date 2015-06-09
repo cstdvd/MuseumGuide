@@ -2,6 +2,7 @@ package com.dcpdr.museumguide;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,9 +20,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 
 public class MapsActivity extends ActionBarActivity {
@@ -89,8 +92,8 @@ public class MapsActivity extends ActionBarActivity {
         // construct the Graph
         return new MapGraph(stateMap, transList);
     }
-    MultilayerMapGraph multigraph;
-    MapGraph.State myRoom, mySensor;
+    public MultilayerMapGraph multigraph;
+    public MapGraph.State myRoom, mySensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,7 +215,6 @@ public class MapsActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_localize) {
             // add marker for my position
@@ -221,6 +223,15 @@ public class MapsActivity extends ActionBarActivity {
                 tileView.moveToMarker(myPosition, true);
             }
             return true;
+        }else if (id == R.id.action_search){
+            Intent nextActivityIntent = new Intent(this, SearchActivity.class);
+
+            ArrayList<MapGraph.State> states = new ArrayList<>();
+            Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
+            states.addAll(set);
+
+            nextActivityIntent.putParcelableArrayListExtra("States", states);
+            startActivity(nextActivityIntent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -253,7 +264,9 @@ public class MapsActivity extends ActionBarActivity {
                         // Note that beacons reported here are already sorted by estimated
                         // distance between device and beacon.
                         if (beacons.size() > 0) {
-                            getRoom(beacons.get(0).getProximityUUID());
+                            //Toast.makeText(getApplicationContext(),beacons.get(0).getMacAddress(),Toast.LENGTH_SHORT).show();
+
+                            getRoom(beacons.get(0).getMacAddress());
                         }
                     }
                 });
@@ -261,10 +274,10 @@ public class MapsActivity extends ActionBarActivity {
         });
     }
 
-    // Return sensor id <-> beacon uuid
-    private String getSensorId(String uuid)
+    // Return sensor id <-> beacon mac address
+    private String getSensorId(String mac)
     {
-        return Parameters.idMap.get(uuid);
+        return Parameters.macMap.get(mac);
     }
 
     // Image has origin coordinates in Top Left,
@@ -276,14 +289,12 @@ public class MapsActivity extends ActionBarActivity {
         return ret;
     }
 
-    private void getRoom(String uuid)
+    private void getRoom(String mac)
     {
-        String sensorId = getSensorId(uuid);
+        String sensorId = getSensorId(mac);
         myRoom = multigraph.getConnectedState(Parameters.SENSORS, sensorId);
         mySensor = multigraph.getState(Parameters.SENSORS, sensorId);
         mySensor = changeCoords(mySensor);
-        //Toast.makeText(getApplicationContext(),myRoom.id,Toast.LENGTH_SHORT).show();
-
 
         // Add position dot
         if (myPosition == null) {
@@ -292,7 +303,8 @@ public class MapsActivity extends ActionBarActivity {
             tileView.addZoomableMarker(myPosition, "blue_dot", mySensor.coords[0], mySensor.coords[1]);
             tileView.forceZoom(0.75);
             tileView.moveToMarker(myPosition, true);
-        }else
+        }else {
             tileView.moveMarker(myPosition, mySensor.coords[0], mySensor.coords[1]);
+        }
     }
 }

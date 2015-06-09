@@ -4,4 +4,6 @@
     tools:context="com.dcpdr.museumguide.MapsActivity">
     <item android:id="@+id/action_localize" android:title="@string/action_localize"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_search" android:title="@string/action_search"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

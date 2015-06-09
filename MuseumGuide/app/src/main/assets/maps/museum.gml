@@ -9,7 +9,7 @@
           <nodes gml:id="N">
 		    <stateMember>
               <State gml:id="EXT">
-                <gml:name>EXT</gml:name>
+                <gml:name>EXIT</gml:name>
                 <connects gml:id="CONEXT">
                   <transitionMember xlink:href="#TREXT_0" />
                 </connects>
@@ -22,7 +22,7 @@
             </stateMember>
             <stateMember>
               <State gml:id="ST0">
-                <gml:name>ST0</gml:name>
+                <gml:name>HALLWAY1</gml:name>
 				<duality gml:id="DUA0">
 				  <cellSpaceMember xlink:href="#CS0" />
 				</duality>
@@ -40,7 +40,7 @@
             </stateMember>
             <stateMember>
               <State gml:id="ST1">
-                <gml:name>ST1</gml:name>
+                <gml:name>HALLWAY2</gml:name>
 				<duality gml:id="DUA1">
 				  <cellSpaceMember xlink:href="#CS1" />
 				</duality>
@@ -60,7 +60,7 @@
             </stateMember>
             <stateMember>
               <State gml:id="ST2">
-                <gml:name>ST2</gml:name>
+                <gml:name>HALLWAY3</gml:name>
 				<duality gml:id="DUA2">
 				  <cellSpaceMember xlink:href="#CS2" />
 				</duality>
@@ -77,7 +77,7 @@
             </stateMember>
             <stateMember>
               <State gml:id="ST3">
-                <gml:name>ST3</gml:name>
+                <gml:name>HALLWAY4</gml:name>
 				<duality gml:id="DUA3">
 				  <cellSpaceMember xlink:href="#CS3" />
 				</duality>
@@ -93,7 +93,7 @@
             </stateMember>
             <stateMember>
               <State gml:id="ST4">
-                <gml:name>ST4</gml:name>
+                <gml:name>TOILET</gml:name>
 				<duality gml:id="DUA4">
 				  <cellSpaceMember xlink:href="#CS4" />
 				</duality>
@@ -109,7 +109,7 @@
             </stateMember>
             <stateMember>
               <State gml:id="ST5">
-                <gml:name>ST5</gml:name>
+                <gml:name>EMERGENCY</gml:name>
 				<duality gml:id="DUA5">
 				  <cellSpaceMember xlink:href="#CS5" />
 				</duality>
@@ -520,7 +520,7 @@
   <PrimalSpaceFeatures gml:id="PSF">
     <cellSpaceMember gml:id="CSM1">
 	  <CellSpace gml:id="CS0">
-	    <gml:name>HALLWAY0</gml:name>
+	    <gml:name>CS0</gml:name>
 	    <geometry>
 			<gml:Polygon gml:id="PO0">
 			  <gml:pos>1650 0 0</gml:pos>
@@ -531,7 +531,7 @@
 		</geometry>
 	  </CellSpace>
 	  <CellSpace gml:id="CS1">
-	    <gml:name>HALLWAY1</gml:name>
+	    <gml:name>CS1</gml:name>
 		<geometry>
 			<gml:Polygon gml:id="PO1">
 			  <gml:pos>1760 1538 0</gml:pos>
@@ -542,7 +542,7 @@
 		</geometry>
 	  </CellSpace>
 	  <CellSpace gml:id="CS2">
-	    <gml:name>HALLWAY2</gml:name>
+	    <gml:name>CS2</gml:name>
 	    <geometry>
 			<gml:Polygon gml:id="PO2">
 			  <gml:pos>1760 1538 0</gml:pos>
@@ -553,7 +553,7 @@
 		</geometry>
 	  </CellSpace>
 	  <CellSpace gml:id="CS3">
-	   <gml:name>HALLWAY3</gml:name>
+	   <gml:name>CS3</gml:name>
 	    <geometry>
 			<gml:Polygon gml:id="PO3">
 			  <gml:pos>465 1538 0</gml:pos>
@@ -564,7 +564,7 @@
 		</geometry>
 	  </CellSpace>
 	  <CellSpace gml:id="CS4">
-	    <gml:name>TOILET</gml:name>
+	    <gml:name>CS4</gml:name>
 	    <geometry>
 			<gml:Polygon gml:id="PO4">
 			  <gml:pos>515 1763 0</gml:pos>
@@ -575,7 +575,7 @@
 		</geometry>
 	  </CellSpace>
 	  <CellSpace gml:id="CS5">
-	    <gml:name>EMERGENCY</gml:name>
+	    <gml:name>CS5</gml:name>
 	    <geometry>
 			<gml:Polygon gml:id="PO5">
 			  <gml:pos>755 1498 0</gml:pos>
