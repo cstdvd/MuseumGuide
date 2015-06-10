@@ -19,7 +19,7 @@
             android:layout_width="45dip"
             android:layout_height="45dip"
             android:contentDescription="image"
-            android:src="@drawable/notte_icon"/>/>
+            android:src="@drawable/starrynight"/>/>
 
     </LinearLayout>
 

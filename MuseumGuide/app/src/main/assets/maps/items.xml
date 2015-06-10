@@ -2,20 +2,20 @@
 <pictures>
 	<picture>
 		<id>"SS1"</id>
-		<name>Notte Stellata</name>
+		<name>Starry Night</name>
 		<author>Van Gogh</author>
 		<description>bello</description>
 	</picture>
 	<picture>
 		<id>"SS3"</id>
-		<name>Girasoli</name>
-		<author>Van Gogh</author>
+		<name>Arrangement in Grey and Black</name>
+		<author>Whistler</author>
 		<description>bello</description>
 	</picture>
 	<picture>
 		<id>"SS6"</id>
-		<name>Fototessera Battista Daniele</name>
-		<author>Macchinetta</author>
-		<description>schifo</description>
+		<name>The Kiss</name>
+		<author>Klimt</author>
+		<description>bello</description>
 	</picture>
 </pictures>

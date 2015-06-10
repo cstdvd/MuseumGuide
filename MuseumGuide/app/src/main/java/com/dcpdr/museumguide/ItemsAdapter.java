@@ -28,8 +28,12 @@ public class ItemsAdapter extends ArrayAdapter<Picture> {
         Picture c = getItem(position);
         name.setText(c.getName());
         author.setText(c.getAuthor());
-        image.setImageResource(R.drawable.notte_icon);
-
+        String iconName = c.getName();
+        iconName = iconName.replace(" ","");
+        iconName = iconName.toLowerCase();
+        int resId = this.getContext().getResources().getIdentifier(iconName,"drawable",
+                Parameters.PACKAGE_NAME);
+        image.setImageResource(resId);
 
         return convertView;
     }
