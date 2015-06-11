@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class ItemsAdapter extends ArrayAdapter<Picture> {
+public class ItemsAdapter extends ArrayAdapter<NavigableItem> {
 
     public ItemsAdapter(Context context, int textViewResourceId,
-            List<Picture> objects) {
+            List<NavigableItem> objects) {
         super(context, textViewResourceId, objects);
     }
 
@@ -25,7 +25,7 @@ public class ItemsAdapter extends ArrayAdapter<Picture> {
         TextView name = (TextView)convertView.findViewById(R.id.name);
         TextView author = (TextView)convertView.findViewById(R.id.author);
         ImageView image = (ImageView) convertView.findViewById(R.id.list_image);
-        Picture c = getItem(position);
+        NavigableItem c = getItem(position);
         name.setText(c.getName());
         author.setText(c.getAuthor());
         String iconName = c.getName();

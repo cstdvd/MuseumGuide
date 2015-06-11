@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class MapsActivity extends ActionBarActivity {
 
@@ -31,7 +32,7 @@ public class MapsActivity extends ActionBarActivity {
     private ImageView myPosition;
 
     private BeaconManager beaconManager;
-    private ArrayList<Picture> pictures;
+    private ArrayList<NavigableItem> pictures;
 
     // Takes GML document and graph's layer and returns the graph
     private MapGraph createGraph(Document document, int level) {
@@ -94,12 +95,12 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     // Takes the document and returns the list of the pictures
-    private ArrayList<Picture> getPictures(Document document)
+    private ArrayList<NavigableItem> getPictures(Document document)
     {
         NodeList nodes = document.getElementsByTagName("picture");
 
         String name, author, description, sensor;
-        ArrayList<Picture> pics = new ArrayList<>();
+        ArrayList<NavigableItem> pics = new ArrayList<>();
 
         for (int i = 0; i < nodes.getLength(); i++) {
             Element element = (Element) nodes.item(i);
@@ -109,7 +110,7 @@ public class MapsActivity extends ActionBarActivity {
             description = element.getElementsByTagName("description").item(0).getTextContent();
             sensor = element.getElementsByTagName("id").item(0).getTextContent();
 
-            Picture picture = new Picture(name, author, description, sensor);
+            NavigableItem picture = new NavigableItem(name, author, description, sensor);
             pics.add(picture);
         }
 
@@ -260,11 +261,18 @@ public class MapsActivity extends ActionBarActivity {
         }else if (id == R.id.action_search){
             Intent nextActivityIntent = new Intent(this, SearchActivity.class);
 
-            /* ArrayList<MapGraph.State> states = new ArrayList<>();
-            Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
-            states.addAll(set); */
-
+            // put the list of pictures
             nextActivityIntent.putParcelableArrayListExtra("Pictures", pictures);
+            // put the toilet and the emergency stairs
+            ArrayList<NavigableItem> states = new ArrayList<>();
+            Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
+            for(MapGraph.State s : set)
+                if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY"))){
+                    states.add(new NavigableItem(s.label, "", "", ""));
+                }
+
+            nextActivityIntent.putParcelableArrayListExtra("States", states);
+
             startActivity(nextActivityIntent);
         }
 

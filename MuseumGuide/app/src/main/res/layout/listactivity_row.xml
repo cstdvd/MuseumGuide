@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
 
     android:orientation="horizontal"
-    android:padding="5dip" >
+    android:padding="5dip"
+    android:background="#fffbfadc">
 
     <!--  image -->
     <LinearLayout android:id="@+id/thumbnail"
@@ -31,7 +32,7 @@
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Notte Stellata"
-        android:textColor="#040404"
+        android:textColor="#60676a"
         android:typeface="sans"
         android:textSize="17dip"
         android:textStyle="bold"/>
@@ -45,7 +46,7 @@
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="Van Gogh"
-        android:textColor="#343434"
+        android:textColor="#60676a"
         android:textSize="12dip" />
 
 </RelativeLayout>

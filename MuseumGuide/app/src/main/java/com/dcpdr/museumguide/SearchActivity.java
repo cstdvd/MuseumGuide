@@ -21,7 +21,10 @@ public class SearchActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        ArrayList<Picture> pictures = getIntent().getParcelableArrayListExtra("Pictures");
+        ArrayList<NavigableItem> pictures = getIntent().getParcelableArrayListExtra("Pictures");
+        ArrayList<NavigableItem> states = getIntent().getParcelableArrayListExtra("States");
+
+        pictures.addAll(states);
 
         final ListView listView = (ListView) findViewById(R.id.searchList);
 

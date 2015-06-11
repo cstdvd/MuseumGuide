@@ -3,14 +3,14 @@ package com.dcpdr.museumguide;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Picture implements Parcelable{
+public class NavigableItem implements Parcelable{
     private String name, author;
     private String description;
     private String sensorId;
 
-    public Picture() {}
+    public NavigableItem() {}
 
-    public Picture(String name, String author, String description, String sensorId)
+    public NavigableItem(String name, String author, String description, String sensorId)
     {
         this.name = name;
         this.author = author;
@@ -50,18 +50,18 @@ public class Picture implements Parcelable{
         out.writeString(sensorId);
     }
 
-    public static final Parcelable.Creator<Picture> CREATOR = new Creator<Picture>() {
-        public Picture createFromParcel(Parcel in) {
-            Picture picture = new Picture();
-            picture.name = in.readString();
-            picture.author = in.readString();
-            picture.description = in.readString();
-            picture.sensorId = in.readString();
-            return picture;
+    public static final Parcelable.Creator<NavigableItem> CREATOR = new Creator<NavigableItem>() {
+        public NavigableItem createFromParcel(Parcel in) {
+            NavigableItem NavigableItem = new NavigableItem();
+            NavigableItem.name = in.readString();
+            NavigableItem.author = in.readString();
+            NavigableItem.description = in.readString();
+            NavigableItem.sensorId = in.readString();
+            return NavigableItem;
         }
 
-        public Picture[] newArray(int size) {
-            return new Picture[size];
+        public NavigableItem[] newArray(int size) {
+            return new NavigableItem[size];
         }
     };
 }
