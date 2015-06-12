@@ -3,7 +3,7 @@ package com.dcpdr.museumguide;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class NavigableItem implements Parcelable{
+public class NavigableItem implements Parcelable, Comparable<NavigableItem>{
     private String name, author;
     private String description;
     private String roomId;
@@ -64,4 +64,10 @@ public class NavigableItem implements Parcelable{
             return new NavigableItem[size];
         }
     };
+
+    // Comparable methods
+    @Override
+    public int compareTo(NavigableItem item) {
+        return name.compareTo(item.getName());
+    }
 }
