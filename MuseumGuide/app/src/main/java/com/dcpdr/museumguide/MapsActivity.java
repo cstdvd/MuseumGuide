@@ -34,6 +34,9 @@ public class MapsActivity extends ActionBarActivity {
     private BeaconManager beaconManager;
     private ArrayList<NavigableItem> pictures;
 
+    public MultilayerMapGraph multigraph;
+    public MapGraph.State myRoom, mySensor;
+
     // Takes GML document and graph's layer and returns the graph
     private MapGraph createGraph(Document document, int level) {
         Element multiLayeredGraph = (Element) document.getElementsByTagName(Parameters.GML_MLG).item(0);
@@ -99,7 +102,7 @@ public class MapsActivity extends ActionBarActivity {
     {
         NodeList nodes = document.getElementsByTagName("picture");
 
-        String name, author, description, sensor;
+        String name, author, description, sensor, room;
         ArrayList<NavigableItem> pics = new ArrayList<>();
 
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -109,16 +112,14 @@ public class MapsActivity extends ActionBarActivity {
             author = element.getElementsByTagName("author").item(0).getTextContent();
             description = element.getElementsByTagName("description").item(0).getTextContent();
             sensor = element.getElementsByTagName("id").item(0).getTextContent();
+            room = multigraph.getConnectedState(Parameters.SENSORS, sensor).id;
 
-            NavigableItem picture = new NavigableItem(name, author, description, sensor);
+            NavigableItem picture = new NavigableItem(name, author, description, room);
             pics.add(picture);
         }
 
         return pics;
     }
-
-    public MultilayerMapGraph multigraph;
-    public MapGraph.State myRoom, mySensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,7 +269,9 @@ public class MapsActivity extends ActionBarActivity {
             Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
             for(MapGraph.State s : set)
                 if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY"))){
-                    states.add(new NavigableItem(s.label, "", "", ""));
+                    String name = s.label.substring(0,1).toUpperCase() +
+                            s.label.substring(1,s.label.length()).toLowerCase();
+                    states.add(new NavigableItem(name, "", "", s.id));
                 }
 
             nextActivityIntent.putParcelableArrayListExtra("States", states);

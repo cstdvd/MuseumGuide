@@ -84,7 +84,7 @@ public class MultilayerMapGraph
     {
         MapGraph.State state = mapGraphs[layer].getState(id);
 
-        for(MultilayerMapGraph.InterLayerConnection i : connections)
+        for(InterLayerConnection i : connections)
         {
             if(layer == Parameters.SENSORS)
                 if(i.end.id.equals(state.id))

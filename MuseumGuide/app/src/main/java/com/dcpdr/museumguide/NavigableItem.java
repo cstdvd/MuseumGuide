@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class NavigableItem implements Parcelable{
     private String name, author;
     private String description;
-    private String sensorId;
+    private String roomId;
 
     public NavigableItem() {}
 
@@ -15,7 +15,7 @@ public class NavigableItem implements Parcelable{
         this.name = name;
         this.author = author;
         this.description = description;
-        this.sensorId = sensorId;
+        this.roomId = sensorId;
     }
 
     public String getName()
@@ -33,9 +33,9 @@ public class NavigableItem implements Parcelable{
         return this.description;
     }
 
-    public String getSensorId()
+    public String getRoomId()
     {
-        return this.sensorId;
+        return this.roomId;
     }
 
     // Parcelable methods
@@ -47,7 +47,7 @@ public class NavigableItem implements Parcelable{
         out.writeString(name);
         out.writeString(author);
         out.writeString(description);
-        out.writeString(sensorId);
+        out.writeString(roomId);
     }
 
     public static final Parcelable.Creator<NavigableItem> CREATOR = new Creator<NavigableItem>() {
@@ -56,7 +56,7 @@ public class NavigableItem implements Parcelable{
             NavigableItem.name = in.readString();
             NavigableItem.author = in.readString();
             NavigableItem.description = in.readString();
-            NavigableItem.sensorId = in.readString();
+            NavigableItem.roomId = in.readString();
             return NavigableItem;
         }
 

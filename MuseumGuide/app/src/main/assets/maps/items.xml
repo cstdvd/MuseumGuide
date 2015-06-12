@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <pictures>
 	<picture>
-		<id>"SS1"</id>
+		<id>SS1</id>
 		<name>Starry Night</name>
 		<author>Van Gogh</author>
 		<description>bello</description>
 	</picture>
 	<picture>
-		<id>"SS3"</id>
+		<id>SS3</id>
 		<name>Arrangement in Grey and Black</name>
 		<author>Whistler</author>
 		<description>bello</description>
 	</picture>
 	<picture>
-		<id>"SS6"</id>
+		<id>SS5</id>
 		<name>The Kiss</name>
 		<author>Klimt</author>
 		<description>bello</description>
