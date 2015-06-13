@@ -19,9 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.estimote.sdk.Beacon;
-import com.estimote.sdk.BeaconManager;
-import com.estimote.sdk.Region;
+import com.kontakt.sdk.android.connection.OnServiceBoundListener;
+import com.kontakt.sdk.android.device.BeaconDevice;
+import com.kontakt.sdk.android.device.Region;
+import com.kontakt.sdk.android.manager.BeaconManager;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
+import static com.kontakt.sdk.android.device.Region.EVERYWHERE;
 
 public class MapsActivity extends ActionBarActivity {
 
@@ -194,7 +197,7 @@ public class MapsActivity extends ActionBarActivity {
         tileView.setScale(0);
         setContentView(tileView);
 
-        // Initialize Estimote
+        // Initialize Kontakt
         initialize();
     }
 
@@ -207,9 +210,9 @@ public class MapsActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
-        beaconManager.disconnect();
-
         super.onDestroy();
+        beaconManager.disconnect();
+        beaconManager = null;
     }
 
     @Override
@@ -217,7 +220,7 @@ public class MapsActivity extends ActionBarActivity {
         super.onStart();
 
         // Check if device supports Bluetooth Low Energy.
-        if (!beaconManager.hasBluetooth()) {
+        if (!beaconManager.isBluetoothLeSupported()) {
             Toast.makeText(this, "Device does not have Bluetooth Low Energy", Toast.LENGTH_LONG).show();
             return;
         }
@@ -232,20 +235,47 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onStop() {
-        try {
-            beaconManager.stopRanging(Parameters.ALL_ESTIMOTE_BEACONS_REGION);
-        } catch (RemoteException e) {
-        }
+    protected void onPause() {
+        super.onPause();
+        if(beaconManager.isConnected())
+            beaconManager.stopRanging();
+    }
 
+    @Override
+    protected void onStop() {
         super.onStop();
+        if(beaconManager.isConnected())
+            beaconManager.stopRanging();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!beaconManager.isBluetoothEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, Parameters.REQUEST_ENABLE_BT);
+        }
+        else if(beaconManager.isConnected())
+            try{
+               beaconManager.startRanging();
+            }
+            catch(RemoteException e) {}
+        else
+            connectToService();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Parameters.REQUEST_ENABLE_BT) {
             if (resultCode == ActionBarActivity.RESULT_OK) {
-                connectToService();
+                if(beaconManager.isConnected())
+                    try{
+                        beaconManager.startRanging();
+                    }
+                    catch(RemoteException e) {}
+                else
+                    connectToService();
             } else {
                 Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
             }
@@ -267,8 +297,7 @@ public class MapsActivity extends ActionBarActivity {
                 tileView.moveToMarker(myPosition, true);
             }
             return true;
-        }else if (id == R.id.action_search)
-        {
+        }else if (id == R.id.action_search){
             Intent nextActivityIntent = new Intent(this, SearchActivity.class);
 
             // put the list of pictures
@@ -276,10 +305,10 @@ public class MapsActivity extends ActionBarActivity {
             // put the toilet and the emergency stairs
             ArrayList<NavigableItem> states = new ArrayList<>();
             Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
-            for (MapGraph.State s : set)
-                if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY"))) {
-                    String name = s.label.substring(0, 1).toUpperCase() +
-                            s.label.substring(1, s.label.length()).toLowerCase();
+            for(MapGraph.State s : set)
+                if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY"))){
+                    String name = s.label.substring(0,1).toUpperCase() +
+                            s.label.substring(1,s.label.length()).toLowerCase();
                     states.add(new NavigableItem(name, "", "", s.id));
                 }
 
@@ -298,25 +327,26 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     private void connectToService() {
-        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
-            @Override
-            public void onServiceReady() {
-                try {
-                    beaconManager.startRanging(Parameters.ALL_ESTIMOTE_BEACONS_REGION);
-                } catch (RemoteException e) {
-                    Toast.makeText(getApplicationContext(), "Cannot start ranging", Toast.LENGTH_LONG).show();
+        try{
+            beaconManager.connect(new OnServiceBoundListener() {
+                @Override
+                public void onServiceBound() throws RemoteException {
+                    beaconManager.startRanging();
                 }
-            }
-        });
+            });
+        }
+        catch (RemoteException e) {
+            Toast.makeText(getApplicationContext(), "Cannot start ranging", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void initialize() {
         // Configure BeaconManager.
-        beaconManager = new BeaconManager(this);
+        beaconManager = BeaconManager.newInstance(this);
 
-        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
+        beaconManager.registerRangingListener(new BeaconManager.RangingListener() {
             @Override
-            public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
+            public void onBeaconsDiscovered(final Region region, final List<BeaconDevice> beacons) {
                 // Note that results are not delivered on UI thread.
                 runOnUiThread(new Runnable() {
                     @Override
@@ -326,7 +356,7 @@ public class MapsActivity extends ActionBarActivity {
                         if (beacons.size() > 0) {
                             //Toast.makeText(getApplicationContext(),beacons.get(0).getMacAddress(),Toast.LENGTH_SHORT).show();
 
-                            getRoom(beacons.get(0).getMacAddress());
+                            getRoom(beacons.get(0).getAddress());
                         }
                     }
                 });

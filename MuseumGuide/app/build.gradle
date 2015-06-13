@@ -16,19 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-    }
-}
-
-repositories {
-    mavenCentral()
-    flatDir {
-        dirs 'libs'
-    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.0.0'
-    compile(name: 'estimote-sdk-preview', ext: 'aar')
+    compile 'com.kontakt.sdk.android:library:1.0.5'
 }

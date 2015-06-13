@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dcpdr.museumguide" >
 
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -33,6 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dcpdr.museumguide.MapsActivity" />
         </activity>
+        <service android:name="com.kontakt.sdk.android.manager.BeaconService" android:exported="false"/>
+        <service android:name="com.kontakt.sdk.android.manager.BeaconServiceL" android:exported="false"/>
     </application>
 
 </manifest>
