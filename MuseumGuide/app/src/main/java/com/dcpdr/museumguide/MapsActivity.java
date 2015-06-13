@@ -1,14 +1,22 @@
 package com.dcpdr.museumguide;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.estimote.sdk.Beacon;
@@ -259,7 +267,8 @@ public class MapsActivity extends ActionBarActivity {
                 tileView.moveToMarker(myPosition, true);
             }
             return true;
-        }else if (id == R.id.action_search){
+        }else if (id == R.id.action_search)
+        {
             Intent nextActivityIntent = new Intent(this, SearchActivity.class);
 
             // put the list of pictures
@@ -267,16 +276,22 @@ public class MapsActivity extends ActionBarActivity {
             // put the toilet and the emergency stairs
             ArrayList<NavigableItem> states = new ArrayList<>();
             Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
-            for(MapGraph.State s : set)
-                if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY"))){
-                    String name = s.label.substring(0,1).toUpperCase() +
-                            s.label.substring(1,s.label.length()).toLowerCase();
+            for (MapGraph.State s : set)
+                if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY"))) {
+                    String name = s.label.substring(0, 1).toUpperCase() +
+                            s.label.substring(1, s.label.length()).toLowerCase();
                     states.add(new NavigableItem(name, "", "", s.id));
                 }
 
             nextActivityIntent.putParcelableArrayListExtra("States", states);
 
             startActivity(nextActivityIntent);
+        }else if (id == R.id.action_info)
+        {
+            NavigableItem pic = pictures.get(1);
+
+            InfoDialog dialog = new InfoDialog(this, pic);
+            dialog.show();
         }
 
         return super.onOptionsItemSelected(item);

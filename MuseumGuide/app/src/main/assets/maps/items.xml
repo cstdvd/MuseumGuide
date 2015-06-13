@@ -4,18 +4,24 @@
 		<id>SS1</id>
 		<name>Starry Night</name>
 		<author>Van Gogh</author>
-		<description>bello</description>
+		<description>The Starry Night is an oil on canvas by the Dutch post-impressionist painter Vincent van Gogh.
+Painted in June, 1889, it depicts the view from the east-facing window of his asylum room at Saint-Remy-de-Provence, just before sunrise, with the addition of an idealized village.
+It is regarded as among Van Gogh's finest works, and one of the most recognized monuments in the history of Western culture.</description>
 	</picture>
 	<picture>
 		<id>SS3</id>
 		<name>Arrangement in Grey and Black</name>
 		<author>Whistler</author>
-		<description>bello</description>
+		<description>Arrangement in Grey and Black No.1, famous under its colloquial name Whistler's Mother, is a painting in oils on canvas created by the American-born painter James McNeill Whistler in 1871.
+The painting is 56.81 by 63.94 inches, displayed in a frame of Whistler's own design.
+It is one of the most famous works by an American artist outside the United States. It has been variously described as an American icon and a Victorian Mona Lisa.</description>
 	</picture>
 	<picture>
 		<id>SS5</id>
 		<name>The Kiss</name>
 		<author>Klimt</author>
-		<description>bello</description>
+		<description>The Kiss (Lovers) was painted by the Austrian Symbolist painter Gustav Klimt between 1908 and 1909, the highpoint of his "Golden Period", when he painted a number of works in a similar gilded style.
+The work is composed of oil paint with applied layers of gold leaf, an aspect that gives it its strikingly modern, yet evocative appearance.
+It is a symbol of Vienna Jugendstil—Viennese Art Nouveau—and is considered Klimt's most popular work.</description>
 	</picture>
 </pictures>

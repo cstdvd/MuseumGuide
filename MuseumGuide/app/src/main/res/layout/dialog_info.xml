@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="horizontal"
+    android:padding="5dip"
+    android:background="#fffbfadc">
+
+    <!-- name-->
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/thumbnail"
+        android:text="Starry Night"
+        android:textColor="#60676a"
+        android:typeface="sans"
+        android:textSize="23dip"
+        android:textStyle="bold"/>
+
+    <!--  image -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:layout_below="@+id/name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip">
+
+        <ImageView
+            android:id="@+id/picture"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:contentDescription="image"
+            android:src="@drawable/starrynight"/>/>
+
+    </LinearLayout>
+
+    <!-- description -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="The Starry Night is an oil on canvas by the Dutch post-impressionist painter Vincent van Gogh.
+Painted in June, 1889, it depicts the view from the east-facing window of his asylum room at Saint-Remy-de-Provence, just before sunrise, with the addition of an idealized village.
+It is regarded as among Van Gogh's finest works, and one of the most recognized monuments in the history of Western culture."
+        android:textColor="#60676a"
+        android:textSize="12dip" />
+
+</RelativeLayout>

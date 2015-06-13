@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Notte Stellata"
+        android:text="Starry Night"
         android:textColor="#60676a"
         android:typeface="sans"
         android:textSize="17dip"
