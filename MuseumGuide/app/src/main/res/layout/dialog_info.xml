@@ -12,7 +12,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/thumbnail"
+        android:padding="5dip"
         android:text="Starry Night"
         android:textColor="#60676a"
         android:typeface="sans"
@@ -50,5 +50,17 @@ Painted in June, 1889, it depicts the view from the east-facing window of his as
 It is regarded as among Van Gogh's finest works, and one of the most recognized monuments in the history of Western culture."
         android:textColor="#60676a"
         android:textSize="12dip" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/button"
+        android:layout_below="@+id/description"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dip"
+        android:textColor="#fffbfadc"
+        android:background="#ff6f888f"
+        android:textStyle="bold" />
 
 </RelativeLayout>

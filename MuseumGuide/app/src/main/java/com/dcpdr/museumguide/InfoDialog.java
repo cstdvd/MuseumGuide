@@ -11,17 +11,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class InfoDialog extends Dialog implements
-        android.view.View.OnClickListener {
+public class InfoDialog extends Dialog {
 
     public Activity c;
     public Dialog d;
-    public Button yes, no;
+    public Button ok;
     private NavigableItem pic;
 
     public InfoDialog(Activity a, NavigableItem pic) {
         super(a);
-        // TODO Auto-generated constructor stub
         this.c = a;
         this.pic = pic;
     }
@@ -47,20 +45,12 @@ public class InfoDialog extends Dialog implements
 
         setContentView(convertView);
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        /*switch (v.getId()) {
-            case R.id.btn_yes:
-                c.finish();
-                break;
-            case R.id.btn_no:
+        Button ok = (Button) findViewById(R.id.button);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 dismiss();
-                break;
-            default:
-                break;
-        }*/
-        dismiss();
+            }
+        });
     }
 }
