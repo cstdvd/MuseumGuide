@@ -199,6 +199,13 @@ public class MapsActivity extends ActionBarActivity {
 
         // Initialize Kontakt
         initialize();
+
+        // Check for selected item in Search Activity
+        // If there is, show navigation from actual location to the selected item
+        ArrayList<NavigableItem> selected = getIntent().getParcelableArrayListExtra("Search");
+        if(selected != null)
+            Toast.makeText(getApplicationContext(),selected.get(0).getName(),Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -317,7 +324,7 @@ public class MapsActivity extends ActionBarActivity {
             startActivity(nextActivityIntent);
         }else if (id == R.id.action_info)
         {
-            NavigableItem pic = pictures.get(1);
+            NavigableItem pic = pictures.get(0);
 
             InfoDialog dialog = new InfoDialog(this, pic);
             dialog.show();

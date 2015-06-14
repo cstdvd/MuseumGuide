@@ -1,9 +1,12 @@
 package com.dcpdr.museumguide;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +36,21 @@ public class SearchActivity extends ActionBarActivity
 
         ItemsAdapter adapter = new ItemsAdapter(this, R.layout.listactivity_row, pictures);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            // Start Maps Activity and give it the selected navigable item
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent nextActivityIntent = new Intent(getApplicationContext(), MapsActivity.class);
+
+                ArrayList<NavigableItem> selectedList = new ArrayList<NavigableItem>();
+                NavigableItem selectedItem = (NavigableItem) adapterView.getItemAtPosition(i);
+                selectedList.add(selectedItem);
+
+                nextActivityIntent.putParcelableArrayListExtra("Search", selectedList);
+                startActivity(nextActivityIntent);
+            }
+        });
     }
 
     @Override

@@ -30,6 +30,7 @@ public class InfoDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         LayoutInflater inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View convertView = inflater.inflate(R.layout.dialog_info, null);
+        setCancelable(false);
         TextView name = (TextView)convertView.findViewById(R.id.name);
         TextView description = (TextView)convertView.findViewById(R.id.description);
         ImageView image = (ImageView) convertView.findViewById(R.id.picture);
@@ -45,7 +46,7 @@ public class InfoDialog extends Dialog {
 
         setContentView(convertView);
 
-        Button ok = (Button) findViewById(R.id.button);
+        ok = (Button) findViewById(R.id.button);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
