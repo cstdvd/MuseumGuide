@@ -1,32 +1,29 @@
 package com.dcpdr.museumguide;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kontakt.sdk.android.configuration.BeaconActivityCheckConfiguration;
+import com.kontakt.sdk.android.configuration.ForceScanConfiguration;
+import com.kontakt.sdk.android.configuration.MonitorPeriod;
+import com.kontakt.sdk.android.connection.BeaconConnection;
 import com.kontakt.sdk.android.connection.OnServiceBoundListener;
+import com.kontakt.sdk.android.data.RssiCalculators;
 import com.kontakt.sdk.android.device.BeaconDevice;
 import com.kontakt.sdk.android.device.Region;
 import com.kontakt.sdk.android.manager.BeaconManager;
+import com.kontakt.sdk.android.model.Beacon;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
@@ -198,7 +195,23 @@ public class MapsActivity extends ActionBarActivity {
         setContentView(tileView);
 
         // Initialize Kontakt
-        initialize();
+        beaconManager = BeaconManager.newInstance(this);
+        beaconManager.setScanMode(BeaconManager.SCAN_MODE_BALANCED);
+        beaconManager.setRssiCalculator(RssiCalculators.newLimitedMeanRssiCalculator(5));
+        beaconManager.setBeaconActivityCheckConfiguration(BeaconActivityCheckConfiguration.DEFAULT);
+        beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
+        beaconManager.registerRangingListener(new BeaconManager.RangingListener(){
+            @Override
+            public void onBeaconsDiscovered(final Region region, final List<BeaconDevice> beacons) {
+                MapsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), beacons.get(0).getUniqueId(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
         // Check for selected item in Search Activity
         // If there is, show navigation from actual location to the selected item
@@ -216,78 +229,64 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onResume(){
+        super.onResume();
+
+        if(!beaconManager.isBluetoothEnabled()){
+            final Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(intent, Parameters.REQUEST_ENABLE_BT);
+        } else if(beaconManager.isConnected()){
+            startRanging();
+        } else {
+            connect();
+        }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if(beaconManager.isConnected()){
+            beaconManager.stopRanging();
+        }
+    }
+
+    @Override
+    protected void onDestroy(){
         super.onDestroy();
         beaconManager.disconnect();
         beaconManager = null;
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Check if device supports Bluetooth Low Energy.
-        if (!beaconManager.isBluetoothLeSupported()) {
-            Toast.makeText(this, "Device does not have Bluetooth Low Energy", Toast.LENGTH_LONG).show();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Parameters.REQUEST_ENABLE_BT) {
+            if(resultCode != Activity.RESULT_OK){
+                Toast.makeText(getApplicationContext(),"Bluetooth not enable", Toast.LENGTH_SHORT).show();
+            }
             return;
         }
-
-        // If Bluetooth is not enabled, let user enable it.
-        if (!beaconManager.isBluetoothEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, Parameters.REQUEST_ENABLE_BT);
-        } else {
-            connectToService();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(beaconManager.isConnected())
-            beaconManager.stopRanging();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(beaconManager.isConnected())
-            beaconManager.stopRanging();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (!beaconManager.isBluetoothEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, Parameters.REQUEST_ENABLE_BT);
-        }
-        else if(beaconManager.isConnected())
-            try{
-               beaconManager.startRanging();
-            }
-            catch(RemoteException e) {}
-        else
-            connectToService();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Parameters.REQUEST_ENABLE_BT) {
-            if (resultCode == ActionBarActivity.RESULT_OK) {
-                if(beaconManager.isConnected())
-                    try{
-                        beaconManager.startRanging();
-                    }
-                    catch(RemoteException e) {}
-                else
-                    connectToService();
-            } else {
-                Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
-            }
-        }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void startRanging(){
+        try{
+            beaconManager.startRanging();
+        }catch (RemoteException e){
+            Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void connect() {
+        try{
+            beaconManager.connect(new OnServiceBoundListener() {
+                @Override
+                public void onServiceBound() throws RemoteException {
+                    beaconManager.startRanging();
+                }
+            });
+        } catch (RemoteException e){
+            Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -333,43 +332,7 @@ public class MapsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void connectToService() {
-        try{
-            beaconManager.connect(new OnServiceBoundListener() {
-                @Override
-                public void onServiceBound() throws RemoteException {
-                    beaconManager.startRanging();
-                }
-            });
-        }
-        catch (RemoteException e) {
-            Toast.makeText(getApplicationContext(), "Cannot start ranging", Toast.LENGTH_LONG).show();
-        }
-    }
 
-    private void initialize() {
-        // Configure BeaconManager.
-        beaconManager = BeaconManager.newInstance(this);
-
-        beaconManager.registerRangingListener(new BeaconManager.RangingListener() {
-            @Override
-            public void onBeaconsDiscovered(final Region region, final List<BeaconDevice> beacons) {
-                // Note that results are not delivered on UI thread.
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Note that beacons reported here are already sorted by estimated
-                        // distance between device and beacon.
-                        if (beacons.size() > 0) {
-                            //Toast.makeText(getApplicationContext(),beacons.get(0).getMacAddress(),Toast.LENGTH_SHORT).show();
-
-                            getRoom(beacons.get(0).getAddress());
-                        }
-                    }
-                });
-            }
-        });
-    }
 
     // Return sensor id <-> beacon mac address
     private String getSensorId(String mac)
