@@ -48,7 +48,7 @@ public class MultilayerMapGraph
 		connections.add(connection);
 	}
 
-    public List<String> getPath(int layer, String startId, String endId)
+    public List<MapGraph.State> getPath(int layer, String startId, String endId)
     {
         MapGraph.State startState = mapGraphs[layer].getState(startId);
         MapGraph.State endState = mapGraphs[layer].getState(endId);
@@ -57,11 +57,7 @@ public class MultilayerMapGraph
         DijkstraShortestPath DSPath = new DijkstraShortestPath(mapGraphs[layer].getGraph(), startState, endState);
         List<MapGraph.State> stateList = Graphs.getPathVertexList(DSPath.getPath());
 
-        List<String> stringList = new ArrayList<>();
-        for(MapGraph.State s : stateList)
-            stringList.add(s.id);
-
-        return stringList;
+        return stateList;
     }
 
     public MapGraph getGraph(int layer)

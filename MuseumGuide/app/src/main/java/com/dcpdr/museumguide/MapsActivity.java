@@ -12,15 +12,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kontakt.sdk.android.configuration.BeaconActivityCheckConfiguration;
-import com.kontakt.sdk.android.configuration.ForceScanConfiguration;
 import com.kontakt.sdk.android.configuration.MonitorPeriod;
-import com.kontakt.sdk.android.connection.BeaconConnection;
 import com.kontakt.sdk.android.connection.OnServiceBoundListener;
 import com.kontakt.sdk.android.data.RssiCalculators;
 import com.kontakt.sdk.android.device.BeaconDevice;
 import com.kontakt.sdk.android.device.Region;
 import com.kontakt.sdk.android.manager.BeaconManager;
-import com.kontakt.sdk.android.model.Beacon;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,8 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import static com.kontakt.sdk.android.device.Region.EVERYWHERE;
-
 public class MapsActivity extends ActionBarActivity {
 
     private XTileView tileView;
@@ -43,7 +38,9 @@ public class MapsActivity extends ActionBarActivity {
     private ArrayList<NavigableItem> pictures;
 
     public MultilayerMapGraph multigraph;
-    public MapGraph.State myRoom, prevRoom, mySensor, prevSensor = null;
+    public MapGraph.State myRoom, prevRoom = null, mySensor, prevSensor = null;
+
+    public BeaconDevice myBeacon;
 
     // Takes GML document and graph's layer and returns the graph
     private MapGraph createGraph(Document document, int level) {
@@ -129,9 +126,95 @@ public class MapsActivity extends ActionBarActivity {
         return pics;
     }
 
+    private void initialize()
+    {
+        beaconManager = BeaconManager.newInstance(this);
+        beaconManager.setScanMode(BeaconManager.SCAN_MODE_LOW_POWER);
+        beaconManager.setRssiCalculator(RssiCalculators.newLimitedMeanRssiCalculator(5));
+        beaconManager.setBeaconActivityCheckConfiguration(BeaconActivityCheckConfiguration.DEFAULT);
+        beaconManager.setDistanceSort(BeaconDevice.DistanceSort.ASC);
+        beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
+        beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
+            @Override
+            public void onBeaconAppeared(final Region region, final BeaconDevice beacon) {
+                MapsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onBeaconsUpdated(final Region region, final List<BeaconDevice> beacons) {
+                MapsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        myBeacon = beacons.get(0);
+                    }
+                });
+            }
+
+            @Override
+            public void onMonitorStart() {
+                MapsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onMonitorStop() {
+                MapsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getRoom(myBeacon.getUniqueId());
+                    }
+                });
+            }
+
+            @Override
+            public void onRegionEntered(final Region region) {
+                MapsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onRegionAbandoned(final Region region) {
+                MapsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+        });
+    }
+
+    // Find a path from actual location to the selected room and draw it
+    private void navigation(NavigableItem item)
+    {
+        MapGraph.State destination = multigraph.getState(Parameters.ROOMS, item.getRoomId());
+        List<MapGraph.State> path = multigraph.getPath(Parameters.ROOMS, myRoom.id, destination.id);
+        List<double[]> positions = new ArrayList<>();
+        for(MapGraph.State s : path) {
+            positions.add(new double[]{s.coords[0], s.coords[1]});
+        }
+
+        //tileView.drawPath(positions);
+        Toast.makeText(getApplicationContext(),"from "+myRoom.id+" to "+destination.id,Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myPosition = null;
 
         // Load gml file and create graphs
         Document document = null;
@@ -140,6 +223,7 @@ public class MapsActivity extends ActionBarActivity {
             XMLParser parser = new XMLParser(xml);
             document = parser.getDocument();
         } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         // Create room graph and sensor graph
@@ -174,6 +258,7 @@ public class MapsActivity extends ActionBarActivity {
             XMLParser parser = new XMLParser(xml);
             doc = parser.getDocument();
         } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         pictures = getPictures(doc);
@@ -195,31 +280,7 @@ public class MapsActivity extends ActionBarActivity {
         setContentView(tileView);
 
         // Initialize Kontakt
-        beaconManager = BeaconManager.newInstance(this);
-        beaconManager.setScanMode(BeaconManager.SCAN_MODE_BALANCED);
-        beaconManager.setRssiCalculator(RssiCalculators.newLimitedMeanRssiCalculator(5));
-        beaconManager.setBeaconActivityCheckConfiguration(BeaconActivityCheckConfiguration.DEFAULT);
-        beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
-        beaconManager.setDistanceSort(BeaconDevice.DistanceSort.ASC);
-        beaconManager.registerRangingListener(new BeaconManager.RangingListener(){
-            @Override
-            public void onBeaconsDiscovered(final Region region, final List<BeaconDevice> beacons) {
-                MapsActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getRoom(beacons.get(0).getUniqueId());
-                    }
-                });
-            }
-        });
-
-
-        // Check for selected item in Search Activity
-        // If there is, show navigation from actual location to the selected item
-        ArrayList<NavigableItem> selected = getIntent().getParcelableArrayListExtra("Search");
-        if(selected != null)
-            Toast.makeText(getApplicationContext(),selected.get(0).getName(),Toast.LENGTH_SHORT).show();
-
+        initialize();
     }
 
     @Override
@@ -230,24 +291,24 @@ public class MapsActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
+    protected void onStart(){
+        super.onStart();
 
         if(!beaconManager.isBluetoothEnabled()){
             final Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, Parameters.REQUEST_ENABLE_BT);
         } else if(beaconManager.isConnected()){
-            startRanging();
+            startMonitoring();
         } else {
             connect();
         }
     }
 
     @Override
-    protected void onPause(){
-        super.onPause();
+    protected void onStop(){
+        super.onStop();
         if(beaconManager.isConnected()){
-            beaconManager.stopRanging();
+            beaconManager.stopMonitoring();
         }
     }
 
@@ -264,14 +325,17 @@ public class MapsActivity extends ActionBarActivity {
             if(resultCode != Activity.RESULT_OK){
                 Toast.makeText(getApplicationContext(),"Bluetooth not enable", Toast.LENGTH_SHORT).show();
             }
-            return;
+        }else if(requestCode == Parameters.REQUEST_SEARCH) {
+            // Check for selected item in Search Activity
+            // If there is, show navigation from actual location to the selected item
+            ArrayList<NavigableItem> selected = data.getParcelableArrayListExtra("Search");
+            navigation(selected.get(0));
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void startRanging(){
+    private void startMonitoring(){
         try{
-            beaconManager.startRanging();
+            beaconManager.startMonitoring();
         }catch (RemoteException e){
             Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -282,7 +346,7 @@ public class MapsActivity extends ActionBarActivity {
             beaconManager.connect(new OnServiceBoundListener() {
                 @Override
                 public void onServiceBound() throws RemoteException {
-                    beaconManager.startRanging();
+                    beaconManager.startMonitoring();
                 }
             });
         } catch (RemoteException e){
@@ -320,14 +384,11 @@ public class MapsActivity extends ActionBarActivity {
                 }
 
             nextActivityIntent.putParcelableArrayListExtra("States", states);
-
-            startActivity(nextActivityIntent);
+            startActivityForResult(nextActivityIntent, Parameters.REQUEST_SEARCH);
         }else if (id == R.id.action_info)
         {
-            NavigableItem pic = pictures.get(0);
-
-            InfoDialog dialog = new InfoDialog(this, pic);
-            dialog.show();
+            if(!checkForPicture())
+                Toast.makeText(getApplicationContext(), "No pictures here", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -335,7 +396,7 @@ public class MapsActivity extends ActionBarActivity {
 
 
     // Check if there is a picture in the actual location
-    private void checkForPicture(){
+    private boolean checkForPicture(){
         NavigableItem pic = null;
         for(NavigableItem n : pictures){
             if(n.getSensorId().equals(mySensor.id)) {
@@ -346,7 +407,9 @@ public class MapsActivity extends ActionBarActivity {
         if(pic != null) {
             InfoDialog dialog = new InfoDialog(this, pic);
             dialog.show();
-        }
+            return true;
+        } else
+            return false;
     }
 
     // Return sensor id <-> beacon id
@@ -375,11 +438,14 @@ public class MapsActivity extends ActionBarActivity {
         mySensor = multigraph.getState(Parameters.SENSORS, sensorId);
         mySensor = changeCoords(mySensor);
 
-        if(prevSensor == null)
-            prevSensor = mySensor;
-        else if(prevSensor != mySensor){
+        if((prevSensor == null) || (!prevSensor.id.equals(mySensor.id))){
             checkForPicture();
             prevSensor = mySensor;
+        }
+
+       if((prevRoom == null) || (!prevRoom.label.equals(myRoom.label))){
+            Toast.makeText(getApplicationContext(), myRoom.label, Toast.LENGTH_SHORT).show();
+            prevRoom = myRoom;
         }
 
         // Add position dot

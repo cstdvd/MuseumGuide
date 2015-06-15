@@ -7,14 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Set;
-
 
 public class SearchActivity extends ActionBarActivity
 {
@@ -43,12 +39,13 @@ public class SearchActivity extends ActionBarActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent nextActivityIntent = new Intent(getApplicationContext(), MapsActivity.class);
 
-                ArrayList<NavigableItem> selectedList = new ArrayList<NavigableItem>();
+                ArrayList<NavigableItem> selectedList = new ArrayList<>();
                 NavigableItem selectedItem = (NavigableItem) adapterView.getItemAtPosition(i);
                 selectedList.add(selectedItem);
 
                 nextActivityIntent.putParcelableArrayListExtra("Search", selectedList);
-                startActivity(nextActivityIntent);
+                setResult(Parameters.REQUEST_SEARCH,nextActivityIntent);
+                finish();
             }
         });
     }

@@ -61,6 +61,9 @@ public class Parameters {
     // Kontakt parameters
     public static final int REQUEST_ENABLE_BT = 1234;
 
+    // Search Activity parameters
+    public static final int REQUEST_SEARCH = 666;
+
     // HashMap mapping
     public static final HashMap<String,String> sensorIdMap = new HashMap<String,String>(){
         {
