@@ -43,7 +43,7 @@ public class MapsActivity extends ActionBarActivity {
     private ArrayList<NavigableItem> pictures;
 
     public MultilayerMapGraph multigraph;
-    public MapGraph.State myRoom, mySensor;
+    public MapGraph.State myRoom, prevRoom, mySensor, prevSensor = null;
 
     // Takes GML document and graph's layer and returns the graph
     private MapGraph createGraph(Document document, int level) {
@@ -122,7 +122,7 @@ public class MapsActivity extends ActionBarActivity {
             sensor = element.getElementsByTagName("id").item(0).getTextContent();
             room = multigraph.getConnectedState(Parameters.SENSORS, sensor).id;
 
-            NavigableItem picture = new NavigableItem(name, author, description, room);
+            NavigableItem picture = new NavigableItem(name, author, description, sensor, room);
             pics.add(picture);
         }
 
@@ -200,6 +200,7 @@ public class MapsActivity extends ActionBarActivity {
         beaconManager.setRssiCalculator(RssiCalculators.newLimitedMeanRssiCalculator(5));
         beaconManager.setBeaconActivityCheckConfiguration(BeaconActivityCheckConfiguration.DEFAULT);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
+        beaconManager.setDistanceSort(BeaconDevice.DistanceSort.ASC);
         beaconManager.registerRangingListener(new BeaconManager.RangingListener(){
             @Override
             public void onBeaconsDiscovered(final Region region, final List<BeaconDevice> beacons) {
@@ -315,7 +316,7 @@ public class MapsActivity extends ActionBarActivity {
                 if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY"))){
                     String name = s.label.substring(0,1).toUpperCase() +
                             s.label.substring(1,s.label.length()).toLowerCase();
-                    states.add(new NavigableItem(name, "", "", s.id));
+                    states.add(new NavigableItem(name, "", "", "", s.id));
                 }
 
             nextActivityIntent.putParcelableArrayListExtra("States", states);
@@ -333,6 +334,20 @@ public class MapsActivity extends ActionBarActivity {
     }
 
 
+    // Check if there is a picture in the actual location
+    private void checkForPicture(){
+        NavigableItem pic = null;
+        for(NavigableItem n : pictures){
+            if(n.getSensorId().equals(mySensor.id)) {
+                pic = n;
+                break;
+            }
+        }
+        if(pic != null) {
+            InfoDialog dialog = new InfoDialog(this, pic);
+            dialog.show();
+        }
+    }
 
     // Return sensor id <-> beacon id
     private String getSensorId(String id)
@@ -353,20 +368,19 @@ public class MapsActivity extends ActionBarActivity {
     {
         String sensorId = getSensorId(id);
 
-        /*Set<MapGraph.State> allStates = multigraph.getAllStates(1);
-        boolean found = false;
-        for(MapGraph.State s : allStates){
-            if(s.id == id){
-                found = true;
-                break;
-            }
-        }
-        if(found == false)
-            return;*/
+        if(sensorId.equals("SS6"))
+            return;
 
         myRoom = multigraph.getConnectedState(Parameters.SENSORS, sensorId);
         mySensor = multigraph.getState(Parameters.SENSORS, sensorId);
         mySensor = changeCoords(mySensor);
+
+        if(prevSensor == null)
+            prevSensor = mySensor;
+        else if(prevSensor != mySensor){
+            checkForPicture();
+            prevSensor = mySensor;
+        }
 
         // Add position dot
         if (myPosition == null) {

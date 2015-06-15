@@ -25,6 +25,7 @@ public class XTileView extends TileView
         public ImageView imageView;
         public String imageBaseName;
         public double[] coords;
+        public double[] shifts;
 
         public Marker(ImageView imageView, String imageBaseName, double coordX, double coordY)
         {
@@ -33,6 +34,7 @@ public class XTileView extends TileView
             coords = new double[2];
             coords[0] = coordX;
             coords[1] = coordY;
+            shifts = new double[2];
         }
 
     }
@@ -50,7 +52,6 @@ public class XTileView extends TileView
             Marker tmp;
             String zoomLevel;
             int resId;
-            double shiftX, shiftY;
 
             // get the current zoom level
             if(scale <= Parameters.ZOOM_3)
@@ -74,9 +75,9 @@ public class XTileView extends TileView
                 resId = getResources().getIdentifier(tmp.imageBaseName + "_" + zoomLevel, "drawable", Parameters.PACKAGE_NAME);
                 tmp.imageView.setImageResource(resId);
                 BitmapDrawable bd=(BitmapDrawable) getResources().getDrawable(resId);
-                shiftX = ((bd.getBitmap().getWidth()/2));
-                shiftY = ((bd.getBitmap().getHeight()/2));
-                extObj.moveMarker(tmp.imageView, tmp.coords[0] - shiftX, tmp.coords[1] - shiftY);
+                tmp.shifts[0] = ((bd.getBitmap().getWidth()/2));
+                tmp.shifts[1] = ((bd.getBitmap().getHeight()/2));
+                extObj.moveMarker(tmp.imageView, tmp.coords[0], tmp.shifts[1]);
             }
         }
     }
@@ -131,7 +132,6 @@ public class XTileView extends TileView
         }
         tmp.coords[0] = x;
         tmp.coords[1] = y;
-        super.moveMarker(view, x, y);
-
+        super.moveMarker(view, x - tmp.shifts[0], y - tmp.shifts[1]);
     }
 }

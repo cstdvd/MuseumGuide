@@ -71,9 +71,9 @@ public class Parameters {
             put("Tvvr","SS4");
             put("6Ls6","SS5");
             put("hWkm","SS6");
-            put("3hI4","SS7");
-            put("bpGG","SS8");
-            put("wLL9","SS9");
+            put("3hI4","SS6");
+            put("bpGG","SS6");
+            put("wLL9","SS6");
         }
     };
 

@@ -6,16 +6,17 @@ import android.os.Parcelable;
 public class NavigableItem implements Parcelable, Comparable<NavigableItem>{
     private String name, author;
     private String description;
-    private String roomId;
+    private String sensorId, roomId;
 
     public NavigableItem() {}
 
-    public NavigableItem(String name, String author, String description, String sensorId)
+    public NavigableItem(String name, String author, String description, String sensorId, String roomId)
     {
         this.name = name;
         this.author = author;
         this.description = description;
-        this.roomId = sensorId;
+        this.sensorId = sensorId;
+        this.roomId = roomId;
     }
 
     public String getName()
@@ -33,6 +34,10 @@ public class NavigableItem implements Parcelable, Comparable<NavigableItem>{
         return this.description;
     }
 
+    public String getSensorId(){
+        return this.sensorId;
+    }
+
     public String getRoomId()
     {
         return this.roomId;
@@ -47,6 +52,7 @@ public class NavigableItem implements Parcelable, Comparable<NavigableItem>{
         out.writeString(name);
         out.writeString(author);
         out.writeString(description);
+        out.writeString(sensorId);
         out.writeString(roomId);
     }
 
@@ -56,6 +62,7 @@ public class NavigableItem implements Parcelable, Comparable<NavigableItem>{
             NavigableItem.name = in.readString();
             NavigableItem.author = in.readString();
             NavigableItem.description = in.readString();
+            NavigableItem.sensorId = in.readString();
             NavigableItem.roomId = in.readString();
             return NavigableItem;
         }
