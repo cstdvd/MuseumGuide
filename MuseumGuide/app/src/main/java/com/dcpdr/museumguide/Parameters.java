@@ -62,11 +62,18 @@ public class Parameters {
     public static final int REQUEST_ENABLE_BT = 1234;
 
     // HashMap mapping
-    public static final HashMap<String,String> macMap = new HashMap<String,String>(){
+    public static final HashMap<String,String> sensorIdMap = new HashMap<String,String>(){
         {
-            put("7C:F9:4C:B7:65:93","SS0");
-            put("7E:53:35:43:CB:2C","SS1");
-
+            put("hbcm","SS0");
+            put("aUZK","SS1");
+            put("LmGw","SS2");
+            put("SC3Y","SS3");
+            put("Tvvr","SS4");
+            put("6Ls6","SS5");
+            put("hWkm","SS6");
+            put("3hI4","SS7");
+            put("bpGG","SS8");
+            put("wLL9","SS9");
         }
     };
 

@@ -206,7 +206,7 @@ public class MapsActivity extends ActionBarActivity {
                 MapsActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), beacons.get(0).getUniqueId(), Toast.LENGTH_SHORT).show();
+                        getRoom(beacons.get(0).getUniqueId());
                     }
                 });
             }
@@ -334,10 +334,10 @@ public class MapsActivity extends ActionBarActivity {
 
 
 
-    // Return sensor id <-> beacon mac address
-    private String getSensorId(String mac)
+    // Return sensor id <-> beacon id
+    private String getSensorId(String id)
     {
-        return Parameters.macMap.get(mac);
+        return Parameters.sensorIdMap.get(id);
     }
 
     // Image has origin coordinates in Top Left,
@@ -349,9 +349,21 @@ public class MapsActivity extends ActionBarActivity {
         return ret;
     }
 
-    private void getRoom(String mac)
+    private void getRoom(String id)
     {
-        String sensorId = getSensorId(mac);
+        String sensorId = getSensorId(id);
+
+        /*Set<MapGraph.State> allStates = multigraph.getAllStates(1);
+        boolean found = false;
+        for(MapGraph.State s : allStates){
+            if(s.id == id){
+                found = true;
+                break;
+            }
+        }
+        if(found == false)
+            return;*/
+
         myRoom = multigraph.getConnectedState(Parameters.SENSORS, sensorId);
         mySensor = multigraph.getState(Parameters.SENSORS, sensorId);
         mySensor = changeCoords(mySensor);
