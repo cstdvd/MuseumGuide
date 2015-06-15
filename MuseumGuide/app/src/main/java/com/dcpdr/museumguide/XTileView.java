@@ -77,7 +77,7 @@ public class XTileView extends TileView
                 BitmapDrawable bd=(BitmapDrawable) getResources().getDrawable(resId);
                 tmp.shifts[0] = ((bd.getBitmap().getWidth()/2));
                 tmp.shifts[1] = ((bd.getBitmap().getHeight()/2));
-                extObj.moveMarker(tmp.imageView, tmp.coords[0], tmp.shifts[1]);
+                extObj.moveMarker(tmp.imageView, tmp.coords[0], tmp.coords[1]);
             }
         }
     }
