@@ -6,8 +6,7 @@
     <string name="enter_button">Enter</string>
     <string name="title_activity_maps">Navigation</string>
     <string name="no_bluetooth">Device does not have Bluetooth Low Energy</string>
-    <string name="not_enabled_bluetooth">Bluetooth not enabled</string>
+    <string name="bluetooth_not_enable">Bluetooth not enable</string>
+    <string name="no_pictures">No pictures here</string>
     <string name="title_activity_search">Search</string>
-
-    <string name="action_settings">Settings</string>
 </resources>

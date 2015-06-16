@@ -30,6 +30,7 @@
                   <transitionMember xlink:href="#TREXT_0" />
                   <transitionMember xlink:href="#TR0_2" />
                   <transitionMember xlink:href="#TR0_1" />
+				  <transitionMember xlink:href="#TR0_6" />
                 </connects>
                 <geometry>
                   <gml:Point gml:id="PT0">
@@ -50,6 +51,7 @@
                   <transitionMember xlink:href="#TR1_3" />
                   <transitionMember xlink:href="#TR1_5" />
                   <transitionMember xlink:href="#TR1_4" />
+				  <transitionMember xlink:href="#TR1_7" />
                 </connects>
                 <geometry>
                   <gml:Point gml:id="PT1">
@@ -109,7 +111,7 @@
             </stateMember>
             <stateMember>
               <State gml:id="ST5">
-                <gml:name>EMERGENCY</gml:name>
+                <gml:name>EMERGENCY STAIRS</gml:name>
 				<duality gml:id="DUA5">
 				  <cellSpaceMember xlink:href="#CS5" />
 				</duality>
@@ -119,6 +121,38 @@
                 <geometry>
                   <gml:Point gml:id="PT5">
                     <gml:pos>869 1257 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+			<stateMember>
+              <State gml:id="ST6">
+                <gml:name>ROOM0</gml:name>
+				<duality gml:id="DUA6">
+				  <cellSpaceMember xlink:href="#CS6" />
+				</duality>
+                <connects gml:id="CON6">
+                  <transitionMember xlink:href="#TR0_6" />
+                </connects>
+                <geometry>
+                  <gml:Point gml:id="PT6">
+                    <gml:pos>2100 998 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+			<stateMember>
+              <State gml:id="ST7">
+                <gml:name>ROOM1</gml:name>
+				<duality gml:id="DUA7">
+				  <cellSpaceMember xlink:href="#CS7" />
+				</duality>
+                <connects gml:id="CON7">
+                  <transitionMember xlink:href="#TR1_7" />
+                </connects>
+                <geometry>
+                  <gml:Point gml:id="PT7">
+                    <gml:pos>1400 2018 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
@@ -244,6 +278,40 @@
                 </geometry>
               </Transition>
             </transitionMember>
+			<transitionMember>
+              <Transition gml:id="TR0_6">
+                <gml:name>TR0_6</gml:name>
+                <weight>1</weight>
+				<duality gml:id="DUA13">
+				  <cellSpaceBoundaryMember xlink:href="#CSB0_6" />
+				</duality>
+                <start xlink:href="#ST0" />
+                <end xlink:href="#ST6" />
+                <geometry>
+                  <gml:LineString gml:id="LS6">
+                    <gml:pos>1746 871 0</gml:pos>
+                    <gml:pos>2100 998 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+			<transitionMember>
+              <Transition gml:id="TR1_7">
+                <gml:name>TR1_7</gml:name>
+                <weight>1</weight>
+				<duality gml:id="DUA13">
+				  <cellSpaceBoundaryMember xlink:href="#CSB1_7" />
+				</duality>
+                <start xlink:href="#ST1" />
+                <end xlink:href="#ST7" />
+                <geometry>
+                  <gml:LineString gml:id="LS6">
+                    <gml:pos>1126 1624 0</gml:pos>
+                    <gml:pos>1400 2018 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
           </edges>
         </SpaceLayer>
       </spaceLayerMember>
@@ -269,6 +337,7 @@
                 <connects gml:id="CONS1">
                   <transitionMember xlink:href="#TRS0_1" />
                   <transitionMember xlink:href="#TRS1_2" />
+				  <transitionMember xlink:href="#TRS1_6" />
                 </connects>
                 <geometry>
                   <gml:Point gml:id="PTS1">
@@ -313,6 +382,7 @@
                   <transitionMember xlink:href="#TRS2_4" />
                   <transitionMember xlink:href="#TRS4_5" />
                   <transitionMember xlink:href="#TRS4_3" />
+				  <transitionMember xlink:href="#TRS4_7" />
                 </connects>
                 <geometry>
                   <gml:Point gml:id="PTS4">
@@ -329,7 +399,33 @@
                 </connects>
                 <geometry>
                   <gml:Point gml:id="PTS5">
-                    <gml:pos>830 1636 0</gml:pos>
+                    <gml:pos>730 1636 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+			<stateMember>
+              <State gml:id="SS6">
+                <gml:name>SS6</gml:name>
+                <connects gml:id="CONS6">
+                  <transitionMember xlink:href="#TRS1_6" />
+                </connects>
+                <geometry>
+                  <gml:Point gml:id="PTS6">
+                    <gml:pos>2100 998 0</gml:pos>
+                  </gml:Point>
+                </geometry>
+              </State>
+            </stateMember>
+			<stateMember>
+              <State gml:id="SS7">
+                <gml:name>SS7</gml:name>
+                <connects gml:id="CONS7">
+                  <transitionMember xlink:href="#TRS4_7" />
+                </connects>
+                <geometry>
+                  <gml:Point gml:id="PTS7">
+                    <gml:pos>1400 2018 0</gml:pos>
                   </gml:Point>
                 </geometry>
               </State>
@@ -401,7 +497,7 @@
                 <geometry>
                   <gml:LineString gml:id="LSS4">
                     <gml:pos>1407 1628 0</gml:pos>
-                    <gml:pos>830 1636 0</gml:pos>
+                    <gml:pos>730 1636 0</gml:pos>
                   </gml:LineString>
                 </geometry>
               </Transition>
@@ -416,6 +512,34 @@
                   <gml:LineString gml:id="LSS5">
                     <gml:pos>1407 1628 0</gml:pos>
                     <gml:pos>2114 1636 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+			<transitionMember>
+              <Transition gml:id="TRS1_6">
+                <gml:name>TRS1_6</gml:name>
+                <weight>1</weight>
+                <start xlink:href="#SS1" />
+                <end xlink:href="#SS6" />
+                <geometry>
+                  <gml:LineString gml:id="LSS6">
+                    <gml:pos>1750 738 0</gml:pos>
+                    <gml:pos>2100 998 0</gml:pos>
+                  </gml:LineString>
+                </geometry>
+              </Transition>
+            </transitionMember>
+			<transitionMember>
+              <Transition gml:id="TRS4_7">
+                <gml:name>TRS4_7</gml:name>
+                <weight>1</weight>
+                <start xlink:href="#SS4" />
+                <end xlink:href="#SS7" />
+                <geometry>
+                  <gml:LineString gml:id="LSS7">
+                    <gml:pos>1407 1628 0</gml:pos>
+                    <gml:pos>1400 2018 0</gml:pos>
                   </gml:LineString>
                 </geometry>
               </Transition>
@@ -515,6 +639,36 @@
 		</ConnectedLayers>
 		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
 	  </InterLayerConnection>
+	  <InterLayerConnection gml:id="ILC7">
+	    <interConnects>
+		  <stateMember xlink:href="#ST6" />
+		</interConnects>
+		<interConnects>
+		  <stateMember xlink:href="#SS6" />
+		</interConnects>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL1" />
+		</ConnectedLayers>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL2" />
+		</ConnectedLayers>
+		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
+	  </InterLayerConnection>
+	  <InterLayerConnection gml:id="ILC8">
+	    <interConnects>
+		  <stateMember xlink:href="#ST7" />
+		</interConnects>
+		<interConnects>
+		  <stateMember xlink:href="#SS7" />
+		</interConnects>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL1" />
+		</ConnectedLayers>
+		<ConnectedLayers>
+		  <spaceLayerMember xlink:href="#SL2" />
+		</ConnectedLayers>
+		<typeOfTopoExpression>CONTAINS</typeOfTopoExpression>
+	  </InterLayerConnection>
 	</interEdges>
   </MultiLayeredGraph>
   <PrimalSpaceFeatures gml:id="PSF">
@@ -585,6 +739,28 @@
 			</gml:Polygon>
 		</geometry>
 	  </CellSpace>
+	  <CellSpace gml:id="CS6">
+	    <gml:name>CS6</gml:name>
+	    <geometry>
+			<gml:Polygon gml:id="PO6">
+			  <gml:pos>1853 1498 0</gml:pos>
+              <gml:pos>1853 518 0</gml:pos>
+			  <gml:pos>2350 1498 0</gml:pos>
+              <gml:pos>2350 518 0</gml:pos>
+			</gml:Polygon>
+		</geometry>
+	  </CellSpace>
+	  <CellSpace gml:id="CS7">
+	    <gml:name>CS7</gml:name>
+	    <geometry>
+			<gml:Polygon gml:id="PO7">
+			  <gml:pos>930 1738 0</gml:pos>
+              <gml:pos>2050 1738 0</gml:pos>
+			  <gml:pos>2050 2258 0</gml:pos>
+              <gml:pos>930 2258 0</gml:pos>
+			</gml:Polygon>
+		</geometry>
+	  </CellSpace>
 	</cellSpaceMember>
 	<cellSpaceBoundaryMember gml:id="CSBM">
 	  <CellSpaceBoundary gml:id="CSBEXT_0">
@@ -640,6 +816,22 @@
 		  <LineString gml:id="LS13">
 		    <gml:pos>812 1538 0</gml:pos>
             <gml:pos>925 1538 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	  <CellSpaceBoundary gml:id="CSB0_6">
+	    <geometry>
+		  <LineString gml:id="LS14">
+		    <gml:pos>1853 790 0</gml:pos>
+            <gml:pos>1853 690 0</gml:pos>
+		  </LineString>
+		</geometry>
+	  </CellSpaceBoundary>
+	  <CellSpaceBoundary gml:id="CSB1_7">
+	    <geometry>
+		  <LineString gml:id="LS15">
+		    <gml:pos>1400 1738 0</gml:pos>
+            <gml:pos>1500 1738 0</gml:pos>
 		  </LineString>
 		</geometry>
 	  </CellSpaceBoundary>

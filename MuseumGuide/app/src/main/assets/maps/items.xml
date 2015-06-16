@@ -24,4 +24,20 @@ It is one of the most famous works by an American artist outside the United Stat
 The work is composed of oil paint with applied layers of gold leaf, an aspect that gives it its strikingly modern, yet evocative appearance.
 It is a symbol of Vienna Jugendstil—Viennese Art Nouveau—and is considered Klimt's most popular work.</description>
 	</picture>
+	<picture>
+		<id>SS7</id>
+		<name>The Son of Man</name>
+		<author>Magritte</author>
+		<description>The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte.
+Magritte painted it as a self-portrait. The painting consists of a man in an overcoat and a bowler hat standing in front of a low wall, beyond which is the sea and a cloudy sky. The man's face is largely obscured by a hovering green apple.
+The Son of Man resembles The Great War on Façades (La Grande Guerre Façades), another Magritte painting featuring similar imagery. Both feature a person standing in front of a wall overlooking the sea.</description>
+	</picture>
+	<picture>
+		<id>SS6</id>
+		<name>Guernica</name>
+		<author>Picasso</author>
+		<description>Guernica is a mural-sized oil painting on canvas by Spanish artist Pablo Picasso completed by June 1937. The painting, which uses a palette of gray, black, and white, is known as one of the most moving and powerful anti-war paintings in history.
+The painting is believed to be a response to the bombing of Guernica, a Basque Country village in northern Spain, by German and Italian warplanes at the request of the Spanish Nationalists.
+Upon completion, Guernica was displayed around the world in a brief tour, becoming famous and widely acclaimed, and believed to have helped bring worldwide attention to the Spanish Civil War.</description>
+	</picture>
 </pictures>

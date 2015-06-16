@@ -236,12 +236,16 @@ public class MapsActivity extends ActionBarActivity {
         MapGraph.State room0 = roomGraph.getState("ST0");
         MapGraph.State room1 = roomGraph.getState("ST1");
         MapGraph.State room2 = roomGraph.getState("ST2");
+        MapGraph.State room6 = roomGraph.getState("ST6");
+        MapGraph.State room7 = roomGraph.getState("ST7");
         MapGraph.State sensor0 = sensorGraph.getState("SS0");
         MapGraph.State sensor1 = sensorGraph.getState("SS1");
         MapGraph.State sensor2 = sensorGraph.getState("SS2");
         MapGraph.State sensor3 = sensorGraph.getState("SS3");
         MapGraph.State sensor4 = sensorGraph.getState("SS4");
         MapGraph.State sensor5 = sensorGraph.getState("SS5");
+        MapGraph.State sensor6 = sensorGraph.getState("SS6");
+        MapGraph.State sensor7 = sensorGraph.getState("SS7");
 
         // Set interlayer connections (room <-> sensor)
         multigraph.addInterConnection(room0, sensor0);
@@ -250,6 +254,8 @@ public class MapsActivity extends ActionBarActivity {
         multigraph.addInterConnection(room2, sensor3);
         multigraph.addInterConnection(room1, sensor4);
         multigraph.addInterConnection(room1, sensor5);
+        multigraph.addInterConnection(room6, sensor6);
+        multigraph.addInterConnection(room7, sensor7);
 
         // Create navigable items
         Document doc = null;
@@ -323,7 +329,7 @@ public class MapsActivity extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == Parameters.REQUEST_ENABLE_BT) {
             if(resultCode != Activity.RESULT_OK){
-                Toast.makeText(getApplicationContext(),"Bluetooth not enable", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),getString(R.string.bluetooth_not_enable), Toast.LENGTH_SHORT).show();
             }
         }else if(requestCode == Parameters.REQUEST_SEARCH) {
             // Check for selected item in Search Activity
@@ -369,15 +375,17 @@ public class MapsActivity extends ActionBarActivity {
             }
             return true;
         }else if (id == R.id.action_search){
+            if(myRoom == null)
+                return true;
             Intent nextActivityIntent = new Intent(this, SearchActivity.class);
-
             // put the list of pictures
             nextActivityIntent.putParcelableArrayListExtra("Pictures", pictures);
             // put the toilet and the emergency stairs
             ArrayList<NavigableItem> states = new ArrayList<>();
             Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
             for(MapGraph.State s : set)
-                if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY"))){
+                if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY STAIRS")) ||
+                        (s.label.equals("EXIT"))){
                     String name = s.label.substring(0,1).toUpperCase() +
                             s.label.substring(1,s.label.length()).toLowerCase();
                     states.add(new NavigableItem(name, "", "", "", s.id));
@@ -388,7 +396,7 @@ public class MapsActivity extends ActionBarActivity {
         }else if (id == R.id.action_info)
         {
             if(!checkForPicture())
-                Toast.makeText(getApplicationContext(), "No pictures here", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.no_pictures), Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -431,7 +439,7 @@ public class MapsActivity extends ActionBarActivity {
     {
         String sensorId = getSensorId(id);
 
-        if(sensorId.equals("SS6"))
+        if(sensorId.equals("SS8"))
             return;
 
         myRoom = multigraph.getConnectedState(Parameters.SENSORS, sensorId);
@@ -454,9 +462,9 @@ public class MapsActivity extends ActionBarActivity {
             myPosition.setImageResource(R.drawable.blue_dot_7);
             tileView.addZoomableMarker(myPosition, "blue_dot", mySensor.coords[0], mySensor.coords[1]);
             tileView.forceZoom(0.75);
-            tileView.moveToMarker(myPosition, true);
         }else {
             tileView.moveMarker(myPosition, mySensor.coords[0], mySensor.coords[1]);
         }
+        tileView.moveToMarker(myPosition, true);
     }
 }
