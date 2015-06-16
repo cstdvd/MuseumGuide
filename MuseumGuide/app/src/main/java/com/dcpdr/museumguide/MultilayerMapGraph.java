@@ -85,9 +85,6 @@ public class MultilayerMapGraph
             if(layer == Parameters.SENSORS)
                 if(i.end.id.equals(state.id))
                     return i.start;
-            else if(layer == Parameters.ROOMS)
-                if(i.start.id.equals(state.id))
-                    return i.end;
         }
         return null;
     }

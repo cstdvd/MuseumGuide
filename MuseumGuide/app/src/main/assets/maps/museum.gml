@@ -127,7 +127,7 @@
             </stateMember>
 			<stateMember>
               <State gml:id="ST6">
-                <gml:name>ROOM0</gml:name>
+                <gml:name>ROOM1</gml:name>
 				<duality gml:id="DUA6">
 				  <cellSpaceMember xlink:href="#CS6" />
 				</duality>
@@ -143,7 +143,7 @@
             </stateMember>
 			<stateMember>
               <State gml:id="ST7">
-                <gml:name>ROOM1</gml:name>
+                <gml:name>ROOM2</gml:name>
 				<duality gml:id="DUA7">
 				  <cellSpaceMember xlink:href="#CS7" />
 				</duality>

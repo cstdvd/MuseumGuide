@@ -150,7 +150,8 @@ public class MapsActivity extends ActionBarActivity {
                 MapsActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        myBeacon = beacons.get(0);
+                        if(beacons != null)
+                            myBeacon = beacons.get(0);
                     }
                 });
             }

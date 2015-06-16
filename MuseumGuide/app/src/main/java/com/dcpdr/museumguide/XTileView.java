@@ -69,14 +69,13 @@ public class XTileView extends TileView
             else
                 zoomLevel = "6";
             // change all zoomable markers
-            for(Iterator<Marker> iterator = extObj.markerList.iterator(); iterator.hasNext(); )
-            {
-                tmp = iterator.next();
+            for (Marker aMarkerList : extObj.markerList) {
+                tmp = aMarkerList;
                 resId = getResources().getIdentifier(tmp.imageBaseName + "_" + zoomLevel, "drawable", Parameters.PACKAGE_NAME);
                 tmp.imageView.setImageResource(resId);
-                BitmapDrawable bd=(BitmapDrawable) getResources().getDrawable(resId);
-                tmp.shifts[0] = ((bd.getBitmap().getWidth()/2));
-                tmp.shifts[1] = ((bd.getBitmap().getHeight()/2));
+                BitmapDrawable bd = (BitmapDrawable) getResources().getDrawable(resId);
+                tmp.shifts[0] = ((bd.getBitmap().getWidth() / 2));
+                tmp.shifts[1] = ((bd.getBitmap().getHeight() / 2));
                 extObj.moveMarker(tmp.imageView, tmp.coords[0], tmp.coords[1]);
             }
         }
@@ -91,7 +90,7 @@ public class XTileView extends TileView
     public XTileView(Context context)
     {
         super(context);
-        markerList = new ArrayList<Marker>();
+        markerList = new ArrayList<>();
         xListener = new XTileViewEventListener();
         super.addTileViewEventListener(xListener);
     }
@@ -105,10 +104,9 @@ public class XTileView extends TileView
     public void removeZoomableMarker(View view, String imageBaseName)
     {
         Marker tmp;
-        for(Iterator<Marker> iterator = markerList.iterator(); iterator.hasNext(); )
-        {
-            tmp = iterator.next();
-            if(tmp.imageBaseName.equals(imageBaseName))
+        for (Marker aMarkerList : markerList) {
+            tmp = aMarkerList;
+            if (tmp.imageBaseName.equals(imageBaseName))
                 markerList.remove(tmp);
         }
         super.removeMarker(view);
@@ -124,10 +122,9 @@ public class XTileView extends TileView
     public void moveMarker(View view, double x, double y)
     {
         Marker tmp = null;
-        for(Iterator<Marker> iterator = markerList.iterator(); iterator.hasNext(); )
-        {
-            tmp = iterator.next();
-            if(tmp.imageView == view)
+        for (Marker aMarkerList : markerList) {
+            tmp = aMarkerList;
+            if (tmp.imageView == view)
                 break;
         }
         tmp.coords[0] = x;

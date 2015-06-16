@@ -41,9 +41,6 @@ public class Parameters {
     public static final String ITEM_FILE = "maps/items.xml";
 
     // XTileView zoom thresholds
-    public static final double ZOOM_0 = 0.2;
-    public static final double ZOOM_1 = 0.25;
-    public static final double ZOOM_2 = 0.3;
     public static final double ZOOM_3 = 0.35;
     public static final double ZOOM_4 = 0.40;
     public static final double ZOOM_5 = 0.5;
