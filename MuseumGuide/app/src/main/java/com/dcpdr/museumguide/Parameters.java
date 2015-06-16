@@ -76,7 +76,7 @@ public class Parameters {
             put("hWkm","SS6");
             put("3hI4","SS7");
             put("bpGG","SS8");
-            put("wLL9","SS8");
+            put("wLL9","SS9");
         }
     };
 

@@ -28,9 +28,9 @@ It is a symbol of Vienna Jugendstil—Viennese Art Nouveau—and is considered K
 		<id>SS7</id>
 		<name>The Son of Man</name>
 		<author>Magritte</author>
-		<description>The Son of Man is a 1964 painting by the Belgian surrealist painter René Magritte.
+		<description>The Son of Man is a 1964 painting by the Belgian surrealist painter Rene Magritte.
 Magritte painted it as a self-portrait. The painting consists of a man in an overcoat and a bowler hat standing in front of a low wall, beyond which is the sea and a cloudy sky. The man's face is largely obscured by a hovering green apple.
-The Son of Man resembles The Great War on Façades (La Grande Guerre Façades), another Magritte painting featuring similar imagery. Both feature a person standing in front of a wall overlooking the sea.</description>
+The Son of Man resembles The Great War on Façades, another Magritte painting featuring similar imagery. Both feature a person standing in front of a wall overlooking the sea.</description>
 	</picture>
 	<picture>
 		<id>SS6</id>
@@ -39,5 +39,13 @@ The Son of Man resembles The Great War on Façades (La Grande Guerre Façades), 
 		<description>Guernica is a mural-sized oil painting on canvas by Spanish artist Pablo Picasso completed by June 1937. The painting, which uses a palette of gray, black, and white, is known as one of the most moving and powerful anti-war paintings in history.
 The painting is believed to be a response to the bombing of Guernica, a Basque Country village in northern Spain, by German and Italian warplanes at the request of the Spanish Nationalists.
 Upon completion, Guernica was displayed around the world in a brief tour, becoming famous and widely acclaimed, and believed to have helped bring worldwide attention to the Spanish Civil War.</description>
+	</picture>
+	<picture>
+		<id>SS9</id>
+		<name>The Scream</name>
+		<author>Munch</author>
+		<description>The Scream is the popular name given to each of four versions of a composition, created as both paintings and pastels, by the Expressionist artist Edvard Munch between 1893 and 1910.
+The Scream of Nature is the title Munch gave to these works, all of which show a figure with an agonized expression against a landscape with a tumultuous orange sky. Arthur Lubow has described The Scream as an icon of modern art, a Mona Lisa for our time.
+Edvard Munch created the four versions in various media.</description>
 	</picture>
 </pictures>

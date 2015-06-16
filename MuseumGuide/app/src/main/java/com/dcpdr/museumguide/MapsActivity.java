@@ -208,7 +208,7 @@ public class MapsActivity extends ActionBarActivity {
         }
 
         //tileView.drawPath(positions);
-        Toast.makeText(getApplicationContext(),"from "+myRoom.id+" to "+destination.id,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "from " + myRoom.id + " to " + destination.id, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -236,6 +236,8 @@ public class MapsActivity extends ActionBarActivity {
         MapGraph.State room0 = roomGraph.getState("ST0");
         MapGraph.State room1 = roomGraph.getState("ST1");
         MapGraph.State room2 = roomGraph.getState("ST2");
+        MapGraph.State room3 = roomGraph.getState("ST3");
+        MapGraph.State room4 = roomGraph.getState("ST4");
         MapGraph.State room6 = roomGraph.getState("ST6");
         MapGraph.State room7 = roomGraph.getState("ST7");
         MapGraph.State sensor0 = sensorGraph.getState("SS0");
@@ -246,6 +248,8 @@ public class MapsActivity extends ActionBarActivity {
         MapGraph.State sensor5 = sensorGraph.getState("SS5");
         MapGraph.State sensor6 = sensorGraph.getState("SS6");
         MapGraph.State sensor7 = sensorGraph.getState("SS7");
+        MapGraph.State sensor8 = sensorGraph.getState("SS8");
+        MapGraph.State sensor9 = sensorGraph.getState("SS9");
 
         // Set interlayer connections (room <-> sensor)
         multigraph.addInterConnection(room0, sensor0);
@@ -256,6 +260,8 @@ public class MapsActivity extends ActionBarActivity {
         multigraph.addInterConnection(room1, sensor5);
         multigraph.addInterConnection(room6, sensor6);
         multigraph.addInterConnection(room7, sensor7);
+        multigraph.addInterConnection(room4, sensor8);
+        multigraph.addInterConnection(room3, sensor9);
 
         // Create navigable items
         Document doc = null;
@@ -402,7 +408,6 @@ public class MapsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     // Check if there is a picture in the actual location
     private boolean checkForPicture(){
         NavigableItem pic = null;
@@ -439,9 +444,6 @@ public class MapsActivity extends ActionBarActivity {
     {
         String sensorId = getSensorId(id);
 
-        if(sensorId.equals("SS8"))
-            return;
-
         myRoom = multigraph.getConnectedState(Parameters.SENSORS, sensorId);
         mySensor = multigraph.getState(Parameters.SENSORS, sensorId);
         mySensor = changeCoords(mySensor);
@@ -462,9 +464,9 @@ public class MapsActivity extends ActionBarActivity {
             myPosition.setImageResource(R.drawable.blue_dot_7);
             tileView.addZoomableMarker(myPosition, "blue_dot", mySensor.coords[0], mySensor.coords[1]);
             tileView.forceZoom(0.75);
+            tileView.moveToMarker(myPosition, true);
         }else {
             tileView.moveMarker(myPosition, mySensor.coords[0], mySensor.coords[1]);
         }
-        tileView.moveToMarker(myPosition, true);
     }
 }

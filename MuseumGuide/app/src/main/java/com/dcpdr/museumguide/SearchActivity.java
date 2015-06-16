@@ -3,9 +3,11 @@ package com.dcpdr.museumguide;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +44,7 @@ public class SearchActivity extends ActionBarActivity
                 selectedList.add(selectedItem);
 
                 nextActivityIntent.putParcelableArrayListExtra("Search", selectedList);
-                setResult(Parameters.REQUEST_SEARCH,nextActivityIntent);
+                setResult(Parameters.REQUEST_SEARCH, nextActivityIntent);
                 finish();
             }
         });
