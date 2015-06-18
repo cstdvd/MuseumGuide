@@ -178,6 +178,14 @@ public class XTileView extends TileView
         }
     }
 
+    public int getPathsDrawn(){
+        return paths.size();
+    }
+
+    public NavigablePath getNavigablePath(String pathId){
+        return paths.get(pathId);
+    }
+
     private void getPathDirections(NavigablePath navigablePath, String pathId)
     {
         ImageView imageView;
@@ -255,7 +263,7 @@ public class XTileView extends TileView
         getPathDirections(navigablePath, pathId);
 
         // draw again the position marker
-        addZoomableMarker(tmp.imageView, "blue_dot", tmp.coords[0], tmp.coords[1]);
+        addZoomableMarker(tmp.imageView, "blue_dot", tmp.coords[0] - tmp.shifts[0], tmp.coords[1] - tmp.shifts[1]);
     }
 
     public void removeNavigablePath(String pathId)

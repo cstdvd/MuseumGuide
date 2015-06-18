@@ -33,6 +33,7 @@ public class MapsActivity extends ActionBarActivity {
 
     private XTileView tileView;
     private ImageView myPosition;
+    private String pathId;
 
     private BeaconManager beaconManager;
     private ArrayList<NavigableItem> pictures;
@@ -201,15 +202,35 @@ public class MapsActivity extends ActionBarActivity {
     // Find a path from actual location to the selected room and draw it
     private void navigation(NavigableItem item)
     {
-        MapGraph.State destination = multigraph.getState(Parameters.ROOMS, item.getRoomId());
-        List<MapGraph.State> path = multigraph.getPath(Parameters.ROOMS, myRoom.id, destination.id);
+        // check if there is already a path drawn and, if it is the case, the latter is removed
+        if(tileView.getPathsDrawn() > 0)
+            tileView.removeNavigablePath(pathId);
+
+        MapGraph.State destination = multigraph.getState(Parameters.SENSORS, item.getSensorId());
+        List<MapGraph.State> path = multigraph.getPath(Parameters.SENSORS, mySensor.id, destination.id);
         List<double[]> positions = new ArrayList<>();
         for(MapGraph.State s : path) {
             positions.add(new double[]{s.coords[0], s.coords[1]});
         }
 
-        //tileView.drawPath(positions);
-        Toast.makeText(getApplicationContext(), "from " + myRoom.id + " to " + destination.id, Toast.LENGTH_SHORT).show();
+        pathId = mySensor.id + "-" + destination.id;
+        tileView.drawNavigablePath(pathId, new XTileView.NavigablePath(positions));
+    }
+
+    // check if you've reached the destination
+    private void checkForDestination(double x, double y)
+    {
+        if(tileView.getPathsDrawn() > 0) {
+            // get destination coordinates
+            XTileView.NavigablePath navP = tileView.getNavigablePath(pathId);
+            double[] dest = navP.points.get(navP.points.size() - 1);
+
+            if ((x == dest[0]) && (y == dest[1])) {
+                tileView.removeNavigablePath(pathId);
+                Toast.makeText(getApplicationContext(), "Destination reached!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -467,7 +488,8 @@ public class MapsActivity extends ActionBarActivity {
             tileView.forceZoom(0.75);
             tileView.moveToMarker(myPosition, true);
         }else {
-            tileView.moveMarker(myPosition, mySensor.coords[0], mySensor.coords[1]);
+            tileView.moveMarker("blue_dot", mySensor.coords[0], mySensor.coords[1]);
+            checkForDestination(mySensor.coords[0], mySensor.coords[1]);
         }
     }
 }
