@@ -5,7 +5,6 @@ import org.jgrapht.alg.DijkstraShortestPath;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class MultilayerMapGraph
 {
@@ -55,9 +54,8 @@ public class MultilayerMapGraph
 
 
         DijkstraShortestPath DSPath = new DijkstraShortestPath(mapGraphs[layer].getGraph(), startState, endState);
-        List<MapGraph.State> stateList = Graphs.getPathVertexList(DSPath.getPath());
 
-        return stateList;
+        return Graphs.getPathVertexList(DSPath.getPath());
     }
 
     public MapGraph getGraph(int layer)
@@ -68,11 +66,6 @@ public class MultilayerMapGraph
     public MapGraph.State getState(int layer, String id)
     {
         return mapGraphs[layer].getState(id);
-    }
-
-    public Set<MapGraph.State> getAllStates(int layer)
-    {
-        return mapGraphs[layer].getAllStates();
     }
 
     // Returns connected state from state's id and its layer

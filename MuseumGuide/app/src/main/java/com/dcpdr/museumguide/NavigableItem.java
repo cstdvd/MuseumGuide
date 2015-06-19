@@ -38,11 +38,6 @@ public class NavigableItem implements Parcelable, Comparable<NavigableItem>{
         return this.sensorId;
     }
 
-    public String getRoomId()
-    {
-        return this.roomId;
-    }
-
     // Parcelable methods
     public int describeContents() {
         return 0;

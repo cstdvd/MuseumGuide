@@ -11,9 +11,7 @@ import android.widget.ImageView;
 
 import com.qozix.tileview.TileView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class XTileView extends TileView
@@ -126,12 +124,14 @@ public class XTileView extends TileView
     {
         markerList.put(imageBaseName, new XTileView.Marker((ImageView) view, imageBaseName, x, y));
         super.addMarker(view, x, y);
+        forceZoom(getScale());
     }
 
     public void addZoomableMarker(View view, String imageBaseName, String markerKey, double x, double y)
     {
         markerList.put(markerKey, new XTileView.Marker((ImageView) view, imageBaseName, x, y));
         super.addMarker(view, x, y);
+        forceZoom(getScale());
     }
 
     public void removeZoomableMarker(String markerKey)
@@ -224,10 +224,10 @@ public class XTileView extends TileView
             // RIGHT
             else if(relevance == 0 && direction == 1)
                 s = "arrow_right";
-            // UP (DOWN)
+            // UP
             else if(relevance == 1 && direction == 0)
                 s = "arrow_up";
-            // DOWN (UP)
+            // DOWN
             else
                 s = "arrow_down";
 
@@ -240,13 +240,8 @@ public class XTileView extends TileView
 
     public void drawNavigablePath(String pathId, NavigablePath navigablePath)
     {
-        Marker tmp = null;
         int itemNum = navigablePath.points.size();
         double scale = getScale();
-
-        // remove position marker for visibility issues
-        tmp = markerList.remove("blue_dot");
-        removeMarker(tmp.imageView);
 
         // add the navigablePath to the HashMap containing all navigablePath obj
         paths.put(pathId, navigablePath);
@@ -262,8 +257,8 @@ public class XTileView extends TileView
         // add marker for the other points in the path according the right direction
         getPathDirections(navigablePath, pathId);
 
-        // draw again the position marker
-        addZoomableMarker(tmp.imageView, "blue_dot", tmp.coords[0] - tmp.shifts[0], tmp.coords[1] - tmp.shifts[1]);
+        // draw again the blue dot due to visibility issues
+        moveMarker("blue_dot", markerList.get("blue_dot").coords[0], markerList.get("blue_dot").coords[1]);
     }
 
     public void removeNavigablePath(String pathId)

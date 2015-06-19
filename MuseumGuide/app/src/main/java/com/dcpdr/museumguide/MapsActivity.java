@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class MapsActivity extends ActionBarActivity {
 
@@ -151,7 +150,7 @@ public class MapsActivity extends ActionBarActivity {
                 MapsActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(beacons != null)
+                        if (!beacons.isEmpty())
                             myBeacon = beacons.get(0);
                     }
                 });
@@ -207,14 +206,18 @@ public class MapsActivity extends ActionBarActivity {
             tileView.removeNavigablePath(pathId);
 
         MapGraph.State destination = multigraph.getState(Parameters.SENSORS, item.getSensorId());
-        List<MapGraph.State> path = multigraph.getPath(Parameters.SENSORS, mySensor.id, destination.id);
-        List<double[]> positions = new ArrayList<>();
-        for(MapGraph.State s : path) {
-            positions.add(new double[]{s.coords[0], s.coords[1]});
-        }
+        if(mySensor.id.equals(destination.id)) {
+            List<MapGraph.State> path = multigraph.getPath(Parameters.SENSORS, mySensor.id, destination.id);
+            List<double[]> positions = new ArrayList<>();
+            for (MapGraph.State s : path) {
+                s = changeCoords(s);
+                positions.add(new double[]{s.coords[0], s.coords[1]});
+            }
+            positions.remove(0);
 
-        pathId = mySensor.id + "-" + destination.id;
-        tileView.drawNavigablePath(pathId, new XTileView.NavigablePath(positions));
+            pathId = mySensor.id + "-" + destination.id;
+            tileView.drawNavigablePath(pathId, new XTileView.NavigablePath(positions));
+        }
     }
 
     // check if you've reached the destination
@@ -227,7 +230,7 @@ public class MapsActivity extends ActionBarActivity {
 
             if ((x == dest[0]) && (y == dest[1])) {
                 tileView.removeNavigablePath(pathId);
-                Toast.makeText(getApplicationContext(), "Destination reached!",
+                Toast.makeText(getApplicationContext(), getString(R.string.destination),
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -408,18 +411,6 @@ public class MapsActivity extends ActionBarActivity {
             Intent nextActivityIntent = new Intent(this, SearchActivity.class);
             // put the list of pictures
             nextActivityIntent.putParcelableArrayListExtra("Pictures", pictures);
-            // put the toilet and the emergency stairs
-            ArrayList<NavigableItem> states = new ArrayList<>();
-            Set<MapGraph.State> set = multigraph.getAllStates(Parameters.ROOMS);
-            for(MapGraph.State s : set)
-                if ((s.label.equals("TOILET")) || (s.label.equals("EMERGENCY STAIRS")) ||
-                        (s.label.equals("EXIT"))){
-                    String name = s.label.substring(0,1).toUpperCase() +
-                            s.label.substring(1,s.label.length()).toLowerCase();
-                    states.add(new NavigableItem(name, "", "", "", s.id));
-                }
-
-            nextActivityIntent.putParcelableArrayListExtra("States", states);
             startActivityForResult(nextActivityIntent, Parameters.REQUEST_SEARCH);
         }else if (id == R.id.action_info)
         {

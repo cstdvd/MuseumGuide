@@ -2,7 +2,6 @@ package com.dcpdr.museumguide;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.jgrapht.Graphs;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
@@ -93,17 +92,6 @@ public class MapGraph
         for(Transition t : transList)
         	graph.addEdge(t.start, t.end);
         
-    }
-    
-    
-    public String getAllNeighbours(State vertix)
-    {
-    	String ret = "";
-    	List<State> tmp =  Graphs.neighborListOf(graph, vertix);
-    	for(State s: tmp)
-    		ret += s.label + " ";
-    	
-    	return ret;
     }
     
     public boolean contains(State vertex)

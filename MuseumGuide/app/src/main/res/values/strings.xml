@@ -9,4 +9,5 @@
     <string name="bluetooth_not_enable">Bluetooth not enable</string>
     <string name="no_pictures">No pictures here</string>
     <string name="title_activity_search">Search</string>
+    <string name="destination">Destination reached!</string>
 </resources>
