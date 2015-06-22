@@ -171,7 +171,8 @@ public class MapsActivity extends ActionBarActivity {
                 MapsActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        getRoom(myBeacon.getUniqueId());
+                        if(myBeacon != null)
+                            getRoom(myBeacon.getUniqueId());
                     }
                 });
             }
