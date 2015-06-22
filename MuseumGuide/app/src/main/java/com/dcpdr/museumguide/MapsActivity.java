@@ -207,7 +207,7 @@ public class MapsActivity extends ActionBarActivity {
             tileView.removeNavigablePath(pathId);
 
         MapGraph.State destination = multigraph.getState(Parameters.SENSORS, item.getSensorId());
-        if(mySensor.id.equals(destination.id)) {
+        if(!mySensor.id.equals(destination.id)) {
             List<MapGraph.State> path = multigraph.getPath(Parameters.SENSORS, mySensor.id, destination.id);
             List<double[]> positions = new ArrayList<>();
             for (MapGraph.State s : path) {
