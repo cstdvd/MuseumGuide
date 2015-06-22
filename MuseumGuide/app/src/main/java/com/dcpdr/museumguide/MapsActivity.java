@@ -359,6 +359,9 @@ public class MapsActivity extends ActionBarActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null)
+            return;
+
         if(requestCode == Parameters.REQUEST_ENABLE_BT) {
             if(resultCode != Activity.RESULT_OK){
                 Toast.makeText(getApplicationContext(),getString(R.string.bluetooth_not_enable), Toast.LENGTH_SHORT).show();
