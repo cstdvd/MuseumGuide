@@ -152,6 +152,8 @@ public class MapsActivity extends ActionBarActivity {
                     public void run() {
                         if (!beacons.isEmpty())
                             myBeacon = beacons.get(0);
+                        else
+                            myBeacon = null;
                     }
                 });
             }
@@ -173,6 +175,10 @@ public class MapsActivity extends ActionBarActivity {
                     public void run() {
                         if(myBeacon != null)
                             getRoom(myBeacon.getUniqueId());
+                        else if(myPosition != null) {
+                            tileView.removeZoomableMarker("blue_dot");
+                            myPosition = null;
+                        }
                     }
                 });
             }
