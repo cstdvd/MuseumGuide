@@ -424,8 +424,8 @@ public class MapsActivity extends ActionBarActivity {
             startActivityForResult(nextActivityIntent, Parameters.REQUEST_SEARCH);
         }else if (id == R.id.action_info)
         {
-            if(!checkForPicture())
-                Toast.makeText(getApplicationContext(), getString(R.string.no_pictures), Toast.LENGTH_SHORT).show();
+                if((mySensor != null) && (!checkForPicture()))
+                    Toast.makeText(getApplicationContext(), getString(R.string.no_pictures), Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
