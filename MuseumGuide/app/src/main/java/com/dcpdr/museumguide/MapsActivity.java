@@ -43,6 +43,7 @@ public class MapsActivity extends ActionBarActivity {
     public BeaconDevice myBeacon;
 
     // Takes GML document and graph's layer and returns the graph
+    // For the information about the document format see the indoorGML standard
     private MapGraph createGraph(Document document, int level) {
         Element multiLayeredGraph = (Element) document.getElementsByTagName(Parameters.GML_MLG).item(0);
         Element spaceLayers = (Element) multiLayeredGraph.getElementsByTagName(Parameters.GML_SLS).item(0);
@@ -126,13 +127,21 @@ public class MapsActivity extends ActionBarActivity {
         return pics;
     }
 
+    // Initialize the Kontakt beacon manager
+    // It was chosen the monitoring mode (instead ranging). It give us more result stability and
+    // less energy consumption
     private void initialize()
     {
         beaconManager = BeaconManager.newInstance(this);
+        // LOW_POWER allows to save device's energy consumption
         beaconManager.setScanMode(BeaconManager.SCAN_MODE_LOW_POWER);
         beaconManager.setRssiCalculator(RssiCalculators.newLimitedMeanRssiCalculator(5));
         beaconManager.setBeaconActivityCheckConfiguration(BeaconActivityCheckConfiguration.DEFAULT);
+        // distance sort is set to ascending order. In this way the first beacon will be the
+        // closest one
         beaconManager.setDistanceSort(BeaconDevice.DistanceSort.ASC);
+        // The shortest monitor period possible to choose is 5 seconds for the active phase and
+        // 5 seconds for the passive phase
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
@@ -145,6 +154,8 @@ public class MapsActivity extends ActionBarActivity {
                 });
             }
 
+            // Every time the beacons list is updated, the myBeacon variable is set to the closest
+            // one
             @Override
             public void onBeaconsUpdated(final Region region, final List<BeaconDevice> beacons) {
                 MapsActivity.this.runOnUiThread(new Runnable() {
@@ -168,6 +179,7 @@ public class MapsActivity extends ActionBarActivity {
                 });
             }
 
+            // When the monitor period is over, the device location is updated
             @Override
             public void onMonitorStop() {
                 MapsActivity.this.runOnUiThread(new Runnable() {
@@ -338,6 +350,7 @@ public class MapsActivity extends ActionBarActivity {
     protected void onStart(){
         super.onStart();
 
+        // Check if Bluetooth is enabled on the device
         if(!beaconManager.isBluetoothEnabled()){
             final Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(intent, Parameters.REQUEST_ENABLE_BT);
@@ -463,6 +476,9 @@ public class MapsActivity extends ActionBarActivity {
         return ret;
     }
 
+    // When the monitor period is over, the device location is updated
+    // The position dot is moved to the new position, if it was changed
+    // The picture's information is shown, if there is a picture close to the device
     private void getRoom(String id)
     {
         String sensorId = getSensorId(id);

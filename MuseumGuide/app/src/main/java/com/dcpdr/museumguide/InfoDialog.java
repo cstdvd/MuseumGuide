@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+// Customized dialog that shows information about the picture close to you
 
 public class InfoDialog extends Dialog {
 
@@ -35,8 +36,10 @@ public class InfoDialog extends Dialog {
         TextView description = (TextView)convertView.findViewById(R.id.description);
         ImageView image = (ImageView) convertView.findViewById(R.id.picture);
 
+        // "pic" is a NavigableItem and it contains all the information about the picture
         name.setText(pic.getName());
         description.setText(pic.getDescription());
+        // The picture's name will be modified in order to find the appropriate image
         String picName = pic.getName();
         picName = picName.replace(" ","");
         picName = picName.toLowerCase();

@@ -5,7 +5,12 @@ import org.jgrapht.alg.DijkstraShortestPath;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// All the graphs are contained inside a multilayer graph
+// In our application, the multilayer graph contains two layer: room graph and sensor graph
+// In order to know which sensors are contained by a room, the two layer are connected by
+// inter layer connections
+// Inter layer connections, as the graphs, the states and the transition, are all defined in the
+// indoorGML standard
 public class MultilayerMapGraph
 {
 	// InterLayerConnection includes only two states of separate layers
@@ -47,6 +52,8 @@ public class MultilayerMapGraph
 		connections.add(connection);
 	}
 
+    // Navigation is implemented by the use of the Dijkstra's algorithm to find the path between
+    // the selected states
     public List<MapGraph.State> getPath(int layer, String startId, String endId)
     {
         MapGraph.State startState = mapGraphs[layer].getState(startId);
@@ -69,6 +76,7 @@ public class MultilayerMapGraph
     }
 
     // Returns connected state from state's id and its layer
+    // It is used to know which sensors are placed inside a room
     public MapGraph.State getConnectedState(int layer, String id)
     {
         MapGraph.State state = mapGraphs[layer].getState(id);

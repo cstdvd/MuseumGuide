@@ -10,8 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+// The rooms and the sensors are managed as graphs (as mentioned in the IndoorGML standard)
+// Each room (or sensor) is a State, and each state is connected with each other by a Transition
 public class MapGraph
 {
+    // We need State as implementation of a parcelable object in order to provide it to the search
+    // activity
     public static class State implements Parcelable
     {
         public String id;

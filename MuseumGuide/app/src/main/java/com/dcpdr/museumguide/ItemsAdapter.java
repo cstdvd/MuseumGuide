@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
-
+// Adapter utilized in the search activity
+// It shows all the pictures with its name, author and image
 public class ItemsAdapter extends ArrayAdapter<NavigableItem> {
 
     public ItemsAdapter(Context context, int textViewResourceId,

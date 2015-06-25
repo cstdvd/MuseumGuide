@@ -6,7 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
+// The main activity includes only the MuseumGuide logo
+// Clicking on "enter" it will starts the map activity
 public class MainActivity extends ActionBarActivity implements View.OnClickListener
 {
 

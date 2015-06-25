@@ -9,7 +9,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+// Search activity provides the list of pictures that can be visited
+// Clicking on them, the activity makes the path between the location the device is and the
+// destination
+// Search activity is activated only if the device position is know, otherwise it's not possible
+// to know the source state of the path
 public class SearchActivity extends ActionBarActivity
 {
 

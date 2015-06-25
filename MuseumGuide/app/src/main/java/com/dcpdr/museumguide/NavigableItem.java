@@ -2,7 +2,9 @@ package com.dcpdr.museumguide;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
+// NavigableItem class is implemented in order to represent the pictures to visit
+// It implements parcelable object in order to provide it to the search activity
+// It implements comparable object in order to compare them and order them
 public class NavigableItem implements Parcelable, Comparable<NavigableItem>{
     private String name, author;
     private String description;
