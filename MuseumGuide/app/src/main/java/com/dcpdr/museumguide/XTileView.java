@@ -3,6 +3,7 @@ package com.dcpdr.museumguide;
 // eXtended TileView class: it allows to add markers whose images change according to
 // the current zoom level. You must define the thresholds and puts the images in the drawable
 // folder with their corresponding names.
+// Moreover, given a set of points as input, it allows to draw a path composed by arrows.
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,6 +20,8 @@ public class XTileView extends TileView
     // ***********************
     // * Marker nested class *
     // ***********************
+	// A new Marker is created whenever a new zoomable object is added to the 
+	// current XTileView object.
     private class Marker
     {
         public ImageView imageView;
@@ -42,6 +45,8 @@ public class XTileView extends TileView
     // ******************
     // * Navigable Path *
     // ******************
+	// Basically, it is a list of couple of points.
+	// It is created for the sake of semplicity to handle multiple 'NavigablePath' objects.
     public static class NavigablePath
     {
         public List<double[]> points;
@@ -56,6 +61,9 @@ public class XTileView extends TileView
     // **************************
     // * XTileViewEventListener *
     // **************************
+	// Whenever the scale changes, for each Marker that is in the 'markerList', the image is
+	// changed according the current zoom level, the shift vector is updated and the marker's
+	// position is moved in order to keep the latter centered in the previous position.
     private class XTileViewEventListener extends TileViewEventListenerImplementation
     {
         @Override
@@ -89,6 +97,9 @@ public class XTileView extends TileView
     private HashMap<String, NavigablePath> paths;
 
     // XTileView methods
+	// Constructor is similar to the original one, since it has the same argument.
+	// It must be noticed that the management of the of zoomable marker is automatic since 
+	// an 'xListener' is associated to the current 'XTileView' obj. No need to set a listener.
     public XTileView(Context context)
     {
         super(context);
@@ -120,14 +131,15 @@ public class XTileView extends TileView
         return zoomLevel;
     }
 
-    public void addZoomableMarker(View view, String imageBaseName, double x, double y)
+    // For compatibility reasons: if markerKey is not set, it will be equal to 'imageBaseName'.
+	public void addZoomableMarker(View view, String imageBaseName, double x, double y)
     {
         markerList.put(imageBaseName, new XTileView.Marker((ImageView) view, imageBaseName, x, y));
         super.addMarker(view, x, y);
         forceZoom(getScale());
     }
 
-    public void addZoomableMarker(View view, String imageBaseName, String markerKey, double x, double y)
+	public void addZoomableMarker(View view, String imageBaseName, String markerKey, double x, double y)
     {
         markerList.put(markerKey, new XTileView.Marker((ImageView) view, imageBaseName, x, y));
         super.addMarker(view, x, y);
@@ -140,13 +152,13 @@ public class XTileView extends TileView
         super.removeMarker(tmp.imageView);
     }
 
-    public void forceZoom(double scale)
+	public void forceZoom(double scale)
     {
         super.setScale(scale);
         xListener.onScaleChanged(scale);
     }
 
-    // for compatibility reasons (inefficient)
+    // For compatibility reasons (inefficient)
     @Override
     public void moveMarker(View view, double x, double y)
     {
@@ -178,23 +190,26 @@ public class XTileView extends TileView
         }
     }
 
-    public int getPathsDrawn(){
+    // It returns the number of path drawn on the current obj
+	public int getPathsDrawn(){
         return paths.size();
     }
 
-    public NavigablePath getNavigablePath(String pathId){
+    // It returns an existing 'NavigablePath' which id is 'pathId'
+	public NavigablePath getNavigablePath(String pathId){
         return paths.get(pathId);
     }
 
-    private void getPathDirections(NavigablePath navigablePath, String pathId)
+    // It computes the directions of the arrows along the path and draws them
+	private void getPathDirections(NavigablePath navigablePath, String pathId)
     {
         ImageView imageView;
         String s;
         // relevance = 0 -> relevant movement along X
         // relevance = 1 -> relevant movement along Y
         int relevance;
-        // direction = 0 -> direction on SX/UP (DOWN)
-        // direction = 1 -> direction on DX/DOWN (UP)
+        // direction = 0 -> direction on SX/UP
+        // direction = 1 -> direction on DX/DOWN
         int direction, resId;
         double[] current, next, diff;
         double scale = getScale();
