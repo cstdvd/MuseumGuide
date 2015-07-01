@@ -79,7 +79,7 @@ public class MultilayerMapGraph
     // It is used to know which sensors are placed inside a room
     public MapGraph.State getConnectedState(int layer, String id)
     {
-        MapGraph.State state = mapGraphs[layer].getState(id);
+		MapGraph.State state = mapGraphs[layer].getState(id);
 
         for(InterLayerConnection i : connections)
         {
