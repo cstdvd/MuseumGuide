@@ -314,7 +314,7 @@ public class MapsActivity extends ActionBarActivity {
 
         // Initialize timer
         timer = new Timer();
-        timer.schedule(task, 2000, 2000);
+        timer.schedule(task, 1500, 1500);
     }
 
     @Override

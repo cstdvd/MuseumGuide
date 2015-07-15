@@ -148,6 +148,8 @@ public class XTileView extends TileView
 
     public void removeZoomableMarker(String markerKey)
     {
+        if(!markerList.containsKey(markerKey))
+            return;
         Marker tmp = markerList.remove(markerKey);
         super.removeMarker(tmp.imageView);
     }
@@ -273,7 +275,8 @@ public class XTileView extends TileView
         getPathDirections(navigablePath, pathId);
 
         // draw again the blue dot due to visibility issues
-        moveMarker("blue_dot", markerList.get("blue_dot").coords[0], markerList.get("blue_dot").coords[1]);
+        if(markerList.containsKey("blue_dot"))
+            moveMarker("blue_dot", markerList.get("blue_dot").coords[0], markerList.get("blue_dot").coords[1]);
     }
 
     public void removeNavigablePath(String pathId)
