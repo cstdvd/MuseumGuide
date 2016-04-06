@@ -31,7 +31,17 @@ The route is indicated by arrows drawn on the map.
 When the user reaches a sensor placed on a paint, the application shows a pop-up window containing the current picture’s information.
 The same information is available pressing the Info menu button, if the user is in a location with a picture.
 
+<<<<<<< HEAD
+References:
+-IndoorGML specifications of OGC: http://www.opengeospatial.org/standards/indoorgml
+-TileView library: https://github.com/moagrius/TileView
+-Kontakt iBeacon: http://docs.kontakt.io/android-sdk/quickstart/ http://docs.kontakt.io/android-sdk/javadoc/index.html
+
+Screenshots:
+![Screenshot](screen.png)
+=======
 ##References
 - IndoorGML specifications of OGC: http://www.opengeospatial.org/standards/indoorgml
 - TileView library: https://github.com/moagrius/TileView
 - Kontakt iBeacon: http://docs.kontakt.io/android-sdk/quickstart/ http://docs.kontakt.io/android-sdk/javadoc/index.html
+>>>>>>> origin/master
